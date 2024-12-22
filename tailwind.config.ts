@@ -14,7 +14,7 @@ export default {
         info: "hsl(249.3, 34.3%, 40.59%)",
       },
       fontFamily: {
-        sans: ["DM Sans", "sans-serif"],
+        sans: ["B612", "sans-serif"],
       },
     },
   },

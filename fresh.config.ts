@@ -7,6 +7,9 @@ export default defineConfig({
     tailwind(),
     wordfresh((config) => ({
       ...config,
+
+      // purgeAll: true,
+
       siteTitle: "OptOut",
       siteDescription: "A experiment in rewilding the internet",
       siteUrl: "https://optout.social",
