@@ -16,7 +16,7 @@ export default function Home({ url }: PageProps) {
           </p>
         </div>
       </Hero>
-      <div class="max-w-3xl mx-auto">
+      <div class="container max-w-3xl mx-auto">
         <p>
           I'm baby taiyaki meh yuccie bicycle rights yes plz beard man bun big
           mood brunch chicharrones artisan tattooed pabst. Tousled cold-pressed

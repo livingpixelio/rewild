@@ -1,20 +1,17 @@
-import { IS_BROWSER } from "$fresh/runtime.ts";
 import { FunctionComponent } from "preact";
-import { useEffect, useState } from "preact/hooks";
+import { useWindowWidth } from "../hooks/useWindowWidth.ts";
 
 const Hero: FunctionComponent = ({ children }) => {
-  const [width, setWidth] = useState<number | "smallest">("smallest");
-  useEffect(() => {
-    if (!IS_BROWSER) return;
-
-    const width = globalThis.innerWidth;
-    setWidth(width);
-  }, []);
+  const width = useWindowWidth();
 
   return (
     <div
-      className="bg-dark bg-cover bg-fixed pb-20 mb-20"
-      style={{ backgroundImage: `url(/image/forest1?width=${width})` }}
+      className={`bg-dark bg-cover bg-fixed pb-20 mb-20`}
+      style={{
+        backgroundImage: `url(/image/forest1?width=${
+          typeof width === "number" ? width : "smallest"
+        })`,
+      }}
     >
       <div
         class="px-4 py-20 mx-auto text-white"
