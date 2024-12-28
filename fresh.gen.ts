@@ -7,6 +7,7 @@ import * as $about from "./routes/about.tsx";
 import * as $image_slug_ from "./routes/image/[slug].ts";
 import * as $index from "./routes/index.tsx";
 import * as $wf from "./routes/wf.tsx";
+import * as $FeatureList from "./islands/FeatureList.tsx";
 import * as $HalfCut from "./islands/HalfCut.tsx";
 import * as $Hero from "./islands/Hero.tsx";
 import * as $Network from "./islands/Network.tsx";
@@ -22,6 +23,7 @@ const manifest = {
     "./routes/wf.tsx": $wf,
   },
   islands: {
+    "./islands/FeatureList.tsx": $FeatureList,
     "./islands/HalfCut.tsx": $HalfCut,
     "./islands/Hero.tsx": $Hero,
     "./islands/Network.tsx": $Network,

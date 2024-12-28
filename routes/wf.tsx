@@ -2,6 +2,7 @@ import { FunctionComponent } from "preact";
 import { Wrapper } from "../components/Wrapper.tsx";
 import { PageProps } from "$fresh/server.ts";
 import { Network } from "../islands/Network.tsx";
+import { FeatureList } from "../islands/FeatureList.tsx";
 
 const WfPage: FunctionComponent<PageProps> = ({ url }) => {
   return (
@@ -42,6 +43,7 @@ const WfPage: FunctionComponent<PageProps> = ({ url }) => {
             mechanisms first-class citizens, instead of having to seek out a
             separate plugin or add-on to satisfy each of them. Some examples:
           </p>
+          <FeatureList />
           <p class="my-4">
             Since nothing I found ticks all these boxes, I am putting together
             my own. As I flesh it out, I will attempt to make it available to
