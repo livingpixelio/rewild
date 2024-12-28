@@ -152,7 +152,7 @@ const About: FunctionComponent<PageProps> = ({ url }) => {
             mobility, choice, and change.
           </blockquote>
 
-          <p class="text-center text-small italic text-info text-sm">
+          <p class="my-4 text-center text-small italic text-info text-sm">
             <a href="https://isbnsearch.org/isbn/9780525542872">
               (Digital Minimalism)
             </a>

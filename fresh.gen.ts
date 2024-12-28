@@ -6,8 +6,10 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $about from "./routes/about.tsx";
 import * as $image_slug_ from "./routes/image/[slug].ts";
 import * as $index from "./routes/index.tsx";
+import * as $wf from "./routes/wf.tsx";
 import * as $HalfCut from "./islands/HalfCut.tsx";
 import * as $Hero from "./islands/Hero.tsx";
+import * as $Network from "./islands/Network.tsx";
 import * as $Shrooms from "./islands/Shrooms.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
@@ -17,10 +19,12 @@ const manifest = {
     "./routes/about.tsx": $about,
     "./routes/image/[slug].ts": $image_slug_,
     "./routes/index.tsx": $index,
+    "./routes/wf.tsx": $wf,
   },
   islands: {
     "./islands/HalfCut.tsx": $HalfCut,
     "./islands/Hero.tsx": $Hero,
+    "./islands/Network.tsx": $Network,
     "./islands/Shrooms.tsx": $Shrooms,
   },
   baseUrl: import.meta.url,
