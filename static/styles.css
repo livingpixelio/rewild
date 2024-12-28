@@ -25,6 +25,7 @@ html {
 body {
   font-family: "B612";
   transition: background-color 3000ms linear;
+  color: hsl(273.33, 9.89%, 17.84%);
 }
 
 body.scrolled {
