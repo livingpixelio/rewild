@@ -25,6 +25,8 @@
     "tailwindcss/": "npm:/tailwindcss@3.4.1/",
     "tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js",
     "$std/": "https://deno.land/std@0.216.0/",
+    "ptera": "https://deno.land/x/ptera@v1.0.2/mod.ts",
+    "ptera/": "https://deno.land/x/ptera@v1.0.2/",
     "wordfresh": "../wordfresh/src/mod.ts"
   },
   "compilerOptions": {

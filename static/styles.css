@@ -31,3 +31,7 @@ body {
 body.scrolled {
   background-color: hsla(86.47, 44.74%, 55.29%, 0.15);
 }
+
+.wf-icon svg {
+  display: inline;
+}

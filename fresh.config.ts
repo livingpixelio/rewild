@@ -8,7 +8,7 @@ export default defineConfig({
     wordfresh((config) => ({
       ...config,
 
-      // purgeAll: true,
+      // purge: true,
 
       siteTitle: "OptOut",
       siteDescription: "A experiment in rewilding the internet",
