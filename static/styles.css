@@ -35,3 +35,14 @@ body.scrolled {
 .wf-icon svg {
   display: inline;
 }
+
+.content p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.content ol {
+  list-style-type: decimal;
+  padding-left: 2rem;
+  font-size: 0.9em;
+}

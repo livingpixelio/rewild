@@ -7,7 +7,7 @@ export const Wrapper: FunctionComponent<WfHeadProps> = (props) => {
     <>
       <WfHead {...props} />
 
-      <div>
+      <div className="pb-10">
         {props.children}
       </div>
     </>

@@ -1,9 +1,8 @@
 import { getBlogProps, Icon, TyPostSchema, WfHead } from "wordfresh";
 import { Handler, PageProps } from "$fresh/server.ts";
-import { datetime } from "ptera";
-import { formatDate } from "ptera/format.ts";
 import { ArrowRight } from "../components/icons.tsx";
 import Hero from "../islands/Hero.tsx";
+import { postDate } from "../lib/datetime.ts";
 
 interface Props {
   posts: TyPostSchema[];
@@ -12,11 +11,6 @@ interface Props {
 export const handler: Handler<Props> = async (req, ctx) => {
   const { items: posts } = await getBlogProps(5, req, ctx);
   return ctx.render({ posts });
-};
-
-const dt = (date?: string) => {
-  if (!date) return null;
-  return formatDate(datetime(date), "MMM dd, YYYY");
 };
 
 export default function Home({ url, data }: PageProps<Props>) {
@@ -49,7 +43,7 @@ export default function Home({ url, data }: PageProps<Props>) {
               <a key={post.slug} class="block my-2" href={`/blog/${post.slug}`}>
                 <h3 class="text-primary text-xl">{post.title}</h3>
                 <p class="text-sm/tight">{post.summary}</p>
-                <p class="text-xs font-bold">{dt(post.date_published)}</p>
+                <p class="text-xs font-bold">{postDate(post.date_published)}</p>
               </a>
             ))}
           </div>
