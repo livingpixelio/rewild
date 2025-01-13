@@ -1,6 +1,8 @@
 ---
 title: "Why I think differently about LLMs"
 summary: "I think that this disconnect between success in general domains vs success in specific domains is where AI boomers are dangerously overpromising."
+image: "/image/scerevisiae"
+banner_image: "/image/neurons"
 date_published: "2025-01-06"
 ---
 

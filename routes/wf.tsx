@@ -43,7 +43,9 @@ const WfPage: FunctionComponent<PageProps> = ({ url }) => {
             mechanisms first-class citizens, instead of having to seek out a
             separate plugin or add-on to satisfy each of them. Some examples:
           </p>
+
           <FeatureList />
+
           <p class="my-4">
             Since nothing I found ticks all these boxes, I am putting together
             my own. As I flesh it out, I will attempt to make it available to
@@ -78,7 +80,14 @@ const WfPage: FunctionComponent<PageProps> = ({ url }) => {
           </p>
           <p class="my-4">
             I will talk about further improvements to the system in the{" "}
-            <a class="text-info font-bold" href="/blog">blog</a>.
+            <a class="text-info font-bold" href="/blog">blog</a>. You can also
+            have a look at the{" "}
+            <a
+              href="https://github.com/CAYdenberg/wordfresh"
+              class="text-info font-bold"
+            >
+              GitHub repo
+            </a>, though fully documenting it is something that take time.
           </p>
         </div>
       </article>
