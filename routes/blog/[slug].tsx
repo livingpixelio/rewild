@@ -1,5 +1,6 @@
 import { PageProps } from "$fresh/server.ts";
-import { CreateMd, Icon, PostHandler, PostHandlerProps } from "wordfresh";
+import { CreateMd, PostHandler, PostHandlerProps } from "wordfresh";
+import { Icon } from "wordfresh/client/Icon.tsx";
 
 import { ArrowLeft } from "../../components/icons.tsx";
 import { postDate } from "../../lib/datetime.ts";

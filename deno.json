@@ -27,7 +27,8 @@
     "$std/": "https://deno.land/std@0.216.0/",
     "ptera": "https://deno.land/x/ptera@v1.0.2/mod.ts",
     "ptera/": "https://deno.land/x/ptera@v1.0.2/",
-    "wordfresh": "../wordfresh/src/mod.ts"
+    "wordfresh": "https://deno.land/x/wordfresh@v0.1.1/mod.ts",
+    "wordfresh/client/": "https://deno.land/x/wordfresh@v0.1.1/client/"
   },
   "compilerOptions": {
     "jsx": "react-jsx",

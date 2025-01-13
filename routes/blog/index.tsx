@@ -1,5 +1,6 @@
 import { Handler, PageProps } from "$fresh/server.ts";
-import { BlogHandler, BlogHandlerProps, Paginator } from "wordfresh";
+import { BlogHandler, BlogHandlerProps } from "wordfresh";
+import { Paginator } from "wordfresh/client/Paginator.tsx";
 import { postDate } from "../../lib/datetime.ts";
 import { Wrapper } from "../../components/Wrapper.tsx";
 

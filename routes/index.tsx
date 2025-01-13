@@ -1,4 +1,5 @@
-import { getBlogProps, Icon, TyPostSchema, WfHead } from "wordfresh";
+import { getBlogProps, TyPostSchema, WfHead } from "wordfresh";
+import { Icon } from "wordfresh/client/Icon.tsx";
 import { Handler, PageProps } from "$fresh/server.ts";
 import { ArrowRight } from "../components/icons.tsx";
 import Hero from "../islands/Hero.tsx";
