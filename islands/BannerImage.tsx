@@ -1,5 +1,5 @@
-import { FunctionComponent } from "../../wordfresh/src/deps.ts";
 import { useWindowWidth } from "../hooks/useWindowWidth.ts";
+import type { FunctionComponent } from "preact";
 
 interface Props {
   src?: string;

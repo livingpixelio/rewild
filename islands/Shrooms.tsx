@@ -1,6 +1,6 @@
 import { FunctionComponent } from "preact";
-import { useWindowWidth } from "../hooks/useWindowWidth.ts";
 import { useCallback } from "preact/hooks";
+import { useWindowWidth } from "../hooks/useWindowWidth.ts";
 
 export const Shrooms: FunctionComponent = () => {
   const width = useWindowWidth();
