@@ -16,6 +16,7 @@ export default defineConfig({
       siteMainAuthor: {
         name: "Casey A. Ydenberg",
       },
+      buildAttachments: false,
     })),
   ],
 });
