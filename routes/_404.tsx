@@ -1,4 +1,4 @@
-import { WfHead } from "wordfresh";
+import { FobHead } from "foblog";
 import { PageProps } from "$fresh/server.ts";
 
 import { HeroFullScreen } from "../islands/Hero.tsx";
@@ -6,7 +6,7 @@ import { HeroFullScreen } from "../islands/Hero.tsx";
 export default function Error404({ url }: PageProps) {
   return (
     <>
-      <WfHead url={url} pageTitle="Page not found" />
+      <FobHead url={url} pageTitle="Page not found" />
       <HeroFullScreen>
         <h1 class="text-4xl font-bold text-success">
           404

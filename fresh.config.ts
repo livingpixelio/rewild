@@ -1,14 +1,12 @@
 import { defineConfig } from "$fresh/server.ts";
 import tailwind from "$fresh/plugins/tailwind.ts";
-import wordfresh from "wordfresh";
+import foblog from "./packages/foblog/plugin/mod.ts";
 
 export default defineConfig({
   plugins: [
     tailwind(),
-    wordfresh((config) => ({
+    foblog((config) => ({
       ...config,
-
-      // purge: true,
 
       siteTitle: "OptOut",
       siteDescription: "A experiment in rewilding the internet",
@@ -16,7 +14,6 @@ export default defineConfig({
       siteMainAuthor: {
         name: "Casey A. Ydenberg",
       },
-      buildAttachments: false,
     })),
   ],
 });

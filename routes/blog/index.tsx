@@ -1,12 +1,9 @@
-import { Handler, PageProps } from "$fresh/server.ts";
-import { BlogHandler, BlogHandlerProps } from "wordfresh";
-import { Paginator } from "wordfresh/client/Paginator.tsx";
-import { postDate } from "../../lib/datetime.ts";
+import { PageProps } from "$fresh/server.ts";
+import { BlogList } from "foblog";
 import { Wrapper } from "../../components/Wrapper.tsx";
+import { Paginator } from "foblog";
 
-export const handler: Handler = BlogHandler(20);
-
-export default function BlogPage({ url, data }: PageProps<BlogHandlerProps>) {
+export default function BlogPage({ url, data }: PageProps<BlogList>) {
   return (
     <Wrapper url={url} pageTitle="Blog">
       <div class="container max-w-3xl mx-auto">
@@ -16,11 +13,10 @@ export default function BlogPage({ url, data }: PageProps<BlogHandlerProps>) {
 
         <hr className="my-4" />
 
-        {data.items.map((post) => (
+        {data.posts.map((post) => (
           <a key={post.slug} class="block my-2" href={`/blog/${post.slug}`}>
             <h3 class="text-primary text-xl">{post.title}</h3>
             <p class="text-sm/tight">{post.summary}</p>
-            <p class="text-xs font-bold">{postDate(post.date_published)}</p>
           </a>
         ))}
 

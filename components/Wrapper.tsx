@@ -1,12 +1,12 @@
 import { FunctionComponent } from "preact";
-import { WfHead } from "wordfresh";
-import type { WfHeadProps } from "wordfresh";
+import { FobHead } from "foblog";
+import type { FobHeadProps } from "foblog";
 import Navbar from "./Navbar.tsx";
 
-export const Wrapper: FunctionComponent<WfHeadProps> = (props) => {
+export const Wrapper: FunctionComponent<FobHeadProps> = (props) => {
   return (
     <>
-      <WfHead {...props} />
+      <FobHead {...props} />
 
       <Navbar />
 

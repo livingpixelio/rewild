@@ -1,27 +1,23 @@
 import { PageProps } from "$fresh/server.ts";
-import { CreateMd, PostHandler, PostHandlerProps } from "wordfresh";
-import { Icon } from "wordfresh/client/Icon.tsx";
+import type { Post } from "foblog";
+import { Icon } from "foblog";
 
 import { ArrowLeft } from "../../components/icons.tsx";
 import { postDate } from "../../lib/datetime.ts";
 import { Wrapper } from "../../components/Wrapper.tsx";
 import { BannerImage } from "../../islands/BannerImage.tsx";
 
-export const handler = PostHandler();
-
-const Md = CreateMd();
-
-export default function PostPage({ url, data }: PageProps<PostHandlerProps>) {
+export default function PostPage({ url, data }: PageProps<Post>) {
   return (
     <Wrapper
       url={url}
       pageTitle="Blog"
-      pageDescription={data.post.summary}
-      pageSocialImage={data.post.image}
+      pageDescription={data.summary}
+      pageSocialImage={data.image}
     >
       <BannerImage
-        src={data.post.banner_image}
-        alt={`Banner image for ${data.post.title}`}
+        src={data.banner_image}
+        alt={`Banner image for ${data.title}`}
       />
       <div class="container max-w-3xl mx-auto">
         <p class="text-xs font-bold my-4">
@@ -32,16 +28,18 @@ export default function PostPage({ url, data }: PageProps<PostHandlerProps>) {
         </p>
 
         <h1 class="text-info text-2xl font-bold my-4">
-          {data.post.title}
+          {data.title}
         </h1>
         <p class="text-xs font-bold my-4">
-          {postDate(data.post.date_published)}
+          {postDate(data.date_published)}
         </p>
 
         <hr className="my-4" />
 
         <div className="content">
-          <Md node={data.post.content} wfData={data.wfData} />
+          <h2>
+            <strong>!!! Need to put the md component here !!!</strong>
+          </h2>
         </div>
 
         <hr className="my-4" />

@@ -1,23 +1,17 @@
-import { getBlogProps, TyPostSchema, WfHead } from "wordfresh";
-import { Icon } from "wordfresh/client/Icon.tsx";
-import { Handler, PageProps } from "$fresh/server.ts";
+import { FobHead, Icon, Post } from "foblog";
+import { PageProps } from "$fresh/server.ts";
 import { ArrowRight } from "../components/icons.tsx";
 import Hero from "../islands/Hero.tsx";
 import { postDate } from "../lib/datetime.ts";
 
 interface Props {
-  posts: TyPostSchema[];
+  posts: Post[];
 }
-
-export const handler: Handler<Props> = async (req, ctx) => {
-  const { items: posts } = await getBlogProps(5, req, ctx);
-  return ctx.render({ posts });
-};
 
 export default function Home({ url, data }: PageProps<Props>) {
   return (
     <>
-      <WfHead url={url} />
+      <FobHead url={url} />
       <Hero>
         <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
           <h1 class="text-4xl font-bold text-success">
