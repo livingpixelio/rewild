@@ -56,3 +56,6 @@ export interface BlogList {
   posts: Post[];
   pagination: Pagination;
 }
+
+export const getBlogList = async (page = 1): Promise<BlogList> => {
+};

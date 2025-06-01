@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "templates/Page.md",
+                "file": "Why I think differently about LLMs.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Page"
+              "title": "Why I think differently about LLMs"
             }
           },
           {
@@ -198,9 +198,9 @@
   },
   "active": "abc72f0d6aa9256d",
   "lastOpenFiles": [
+    "templates/Page.md",
     "Why I think differently about LLMs.md",
     "templates/Partial.md",
-    "templates/Page.md",
     "templates/Post.md",
     "llms-think-different.md",
     "templates"
