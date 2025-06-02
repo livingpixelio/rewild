@@ -10,7 +10,7 @@ export interface Model<S extends { slug: string }> {
 
   schema: z.Schema<S>;
 
-  onRead: (fullPath: string, opts: OnReadOptions) => Promise<S | S[]>;
+  onRead?: (fullPath: string, opts: OnReadOptions) => Promise<S | S[]>;
 }
 
 // deno-lint-ignore no-explicit-any

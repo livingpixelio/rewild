@@ -1,24 +1,30 @@
-import { crypto, encodeHex, path } from "../deps.ts";
+import { crypto, encodeHex, path, z } from "../deps.ts";
+import { Model } from "../lib/model/Model.ts";
 import { config } from "../plugin/config.ts";
 
 const CONTENT_DIR = path.join(Deno.cwd(), config.contentDir);
 
-interface Ls {
-  finishTime: number;
-  files: Array<LsEntry>;
-}
+const LsSchema = z.object({
+  slug: z.string(),
+  files: z.array(z.object({
+    basename: z.string(),
+    extension: z.string(),
+    checksum: z.string(),
+    resources: z.array(z.object({
+      type: z.string(),
+      slug: z.string(),
+    })),
+  })),
+});
 
-interface LsEntry {
-  basename: string;
-  extension: string;
-  checksum: string;
-  resources: Array<Resource>;
-}
+type Ls = z.infer<typeof LsSchema>;
+type LsEntry = Ls["files"][number];
+type Resource = LsEntry["resources"][number];
 
-interface Resource {
-  type: string;
-  slug: string;
-}
+const LsModel: Model<Ls> = {
+  name: "ls",
+  schema: LsSchema,
+};
 
 export const getChecksum = async (data: Uint8Array): Promise<string> => {
   const digest = await crypto.subtle.digest("SHA-256", data);
@@ -39,17 +45,42 @@ export const buildLs = async (
   const finishTime = Date.now();
 
   return {
-    finishTime,
+    slug: `${finishTime}`,
     files: entries,
   };
 };
 
-export const findPrevEntry =
-  (prev: Ls | null) => (basename: string, ext: string): LsEntry | null => {
-    return null;
-  };
+export const findPrevEntry = (prev: Ls | null) =>
+(
+  basename: string,
+  extension: string,
+): LsEntry | null => {
+  return prev?.files.find((entry) =>
+    entry.basename == basename && entry.extension === extension
+  ) || null;
+};
 
-export const resourcesToDelete = (prev: Ls, next: Ls) => {};
+const smooshResources = (ls: Ls): Resource[] => {
+  return ls.files.reduce((acc, file) => {
+    return [...acc, ...file.resources];
+  }, [] as Resource[]);
+};
+
+export const resourcesToDelete = (
+  prev: Ls | null,
+  next: Ls,
+): Resource[] => {
+  if (!prev) return [];
+
+  const prevResources = smooshResources(prev);
+  const nextResources = smooshResources(next);
+
+  return prevResources.filter((prevItem) =>
+    !nextResources.find((nextItem) =>
+      prevItem.type === nextItem.type && prevItem.slug === nextItem.slug
+    )
+  );
+};
 
 export const writeFileToStatic = (filename: string, binary: Uint8Array) =>
   Promise<boolean>;
