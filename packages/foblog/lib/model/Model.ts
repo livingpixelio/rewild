@@ -16,14 +16,14 @@ export interface Model<S extends { slug: string }> {
 
   schema: z.Schema<S>;
 
-  onRead?: (file: ReadData, opts: OnReadOptions) => Promise<S | S[]>;
+  onRead?: (file: ReadData, opts: OnReadOptions) => S | [];
 
-  onCreate?: (resource: S) => void;
+  onCreate?: (resource: S) => Promise<void>;
 
-  onUpdate?: (resource: S) => void;
+  onUpdate?: (resource: S) => Promise<void>;
 
-  onDelete?: (slug: string) => void;
+  onDelete?: (slug: string) => Promise<void>;
 }
 
 // deno-lint-ignore no-explicit-any
-export type AnyModel = Model<{ slug: string & Record<string, any> }>;
+export type AnyModel = Model<{ slug: string } & Record<string, any>>;

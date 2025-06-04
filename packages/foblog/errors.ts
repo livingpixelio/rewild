@@ -5,3 +5,7 @@ export const warn = (message: string) => {
     console.warn(`Foblog: ${message}`);
   }
 };
+
+export const getErrorMessage = (error: Error | unknown) => {
+  return (error instanceof Error) ? error.message : "Unknown error";
+};

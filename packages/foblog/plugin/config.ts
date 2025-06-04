@@ -1,3 +1,5 @@
+import { Author } from "../mod.ts";
+
 export interface PluginConfig {
   developerWarnings: boolean;
   contentDir: string;
@@ -5,7 +7,7 @@ export interface PluginConfig {
   siteUrl?: string;
   siteTitle?: string;
   siteDescription?: string;
-  siteMainAuthor?: any;
+  siteMainAuthor?: Author;
 
   posts: {
     listUrl: (page: number) => string;

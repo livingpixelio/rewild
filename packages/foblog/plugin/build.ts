@@ -1,4 +1,5 @@
 import { AnyModel, ReadData } from "../lib/model/Model.ts";
+import { post } from "foblog";
 import { Table } from "../storage/db.ts";
 import {
   buildLs,
@@ -7,54 +8,48 @@ import {
   LsModel,
   openFile,
   Resource,
+  resourcesToDelete,
 } from "../storage/disk.ts";
 
 const LsTable = Table(LsModel);
 
-export const handleBuildError = (error: Error | unknown) => {
-  // in dev, log developer warning to console
-
-  // in build/prod, log developer warning and then escale (exit the build)
-};
-
 // never run buildResources more than once concurrently
-export const doBuild = (models: AnyModel[]) => async () => {
+export const doBuild = (...models: AnyModel[]) => {
   const runModels = (
     file: ReadData,
     isUpdate: boolean,
   ): Promise<Resource[]> => {
     return Promise.all(models.map((model) => {
       const table = Table(model);
-      if (!model.onRead) return Promise.resolve([]);
+      if (!model.onRead) return [];
 
-      return model.onRead(file, { isUpdate }).then((resource) =>
-        Array.isArray(resource) ? resource : [resource]
-      ).then((resources) =>
-        Promise.all(
-          resources.map(async (resource) => {
-            await table.upsert(resource.slug, resource);
-            if (model.onUpdate && isUpdate) {
-              model.onUpdate(resource);
-            }
-            if (model.onCreate && !isUpdate) {
-              model.onCreate(resource);
-            }
-            return {
-              type: model.name,
-              slug: resource.slug,
-            };
-          }),
-        )
+      const resource = model.onRead(file, { isUpdate });
+      const resources = Array.isArray(resource) ? resource : [resource];
+
+      return Promise.all(
+        resources.map(async (resource) => {
+          await table.upsert(resource.slug, resource);
+          if (model.onUpdate && isUpdate) {
+            await model.onUpdate(resource);
+          }
+          if (model.onCreate && !isUpdate) {
+            await model.onCreate(resource);
+          }
+          return {
+            type: model.name,
+            slug: resource.slug,
+          };
+        }),
       );
-    }))
-      .then((results) => results.flat());
+    })).then((results) => results.flat());
   };
 
-  const prevLs = await LsTable.get("ls");
-  const compareEntries = findPrevEntry(prevLs);
+  const doIt = async () => {
+    const prevLs = await LsTable.get("ls");
+    const compareEntries = findPrevEntry(prevLs);
 
-  const nextLs: Ls = await buildLs((entry) => {
-    return openFile(entry).then(async (file) => {
+    const nextLs: Ls = await buildLs(async (entry) => {
+      const file = await openFile(entry);
       const prevEntry = compareEntries(file.filename, file.extension);
 
       const metadata = {
@@ -81,7 +76,38 @@ export const doBuild = (models: AnyModel[]) => async () => {
 
       return prevEntry;
     });
-  });
+
+    await Promise.all(
+      resourcesToDelete(prevLs, nextLs).map(async (resource) => {
+        const model = models.find((model) => model.name === resource.type);
+        if (!model) return;
+        await Table(model).remove(resource.slug);
+
+        if (model.onDelete) {
+          await model.onDelete(resource.slug);
+        }
+        return true;
+      }),
+    );
+
+    await LsTable.upsert("ls", nextLs);
+
+    return true;
+  };
+
+  return (isProduction?: boolean) =>
+    doIt().catch(handleBuildError(isProduction));
 };
 
+export const handleBuildError =
+  (isProduction?: boolean) => (error: Error | unknown) => {
+    console.error("foblog build error", error);
+
+    if (isProduction) {
+      throw error;
+    }
+  };
+
 export const setupListener = () => {};
+
+export const build = doBuild(post);
