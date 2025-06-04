@@ -1,8 +1,10 @@
 import { crypto, encodeHex, path, z } from "../deps.ts";
 import { Model } from "../lib/model/Model.ts";
 import { config } from "../plugin/config.ts";
+import { slugify } from "../parsers/index.ts";
 
 const CONTENT_DIR = path.join(Deno.cwd(), config.contentDir);
+const ATTACHMENTS_DIR = path.join(Deno.cwd(), config.attachmentsDir);
 
 const LsSchema = z.object({
   slug: z.string(),
@@ -17,11 +19,11 @@ const LsSchema = z.object({
   })),
 });
 
-type Ls = z.infer<typeof LsSchema>;
-type LsEntry = Ls["files"][number];
-type Resource = LsEntry["resources"][number];
+export type Ls = z.infer<typeof LsSchema>;
+export type LsEntry = Ls["files"][number];
+export type Resource = LsEntry["resources"][number];
 
-const LsModel: Model<Ls> = {
+export const LsModel: Model<Ls> = {
   name: "ls",
   schema: LsSchema,
 };
@@ -38,15 +40,34 @@ export const buildLs = async (
 
   let entries: LsEntry[] = [];
   for await (const dirEntry of dir) {
+    if (!dirEntry.isFile) {
+      continue;
+    }
     const lsEntry = await forEachFile(dirEntry);
     entries = [...entries, lsEntry];
   }
 
-  const finishTime = Date.now();
+  const finishTime: number = Date.now();
 
   return {
     slug: `${finishTime}`,
     files: entries,
+  };
+};
+
+export const openFile = async (entry: Deno.DirEntry) => {
+  const fullPath = path.join(CONTENT_DIR, entry.name);
+  const extension = path.extname(fullPath);
+  const filename = path.basename(fullPath, path.extname(fullPath));
+  const data = await Deno.readFile(fullPath);
+  const checksum = await getChecksum(data);
+  const defaultSlug = slugify(filename);
+  return {
+    filename,
+    extension,
+    defaultSlug,
+    checksum,
+    data,
   };
 };
 
@@ -82,5 +103,11 @@ export const resourcesToDelete = (
   );
 };
 
-export const writeFileToStatic = (filename: string, binary: Uint8Array) =>
-  Promise<boolean>;
+export const writeFileToStatic = (
+  filename: string,
+  extension: string,
+  binary: Uint8Array,
+) => {
+  const destPath = path.join(ATTACHMENTS_DIR, `${filename}.${extension}`);
+  return Deno.writeFile(destPath, binary);
+};

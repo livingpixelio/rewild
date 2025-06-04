@@ -1,8 +1,14 @@
 import { z } from "../../deps.ts";
 
+export interface ReadData {
+  filename: string;
+  extension: string;
+  defaultSlug: string;
+  data: Uint8Array;
+}
+
 interface OnReadOptions {
   isUpdate: boolean;
-  createStaticFile: (filename: string, data: Uint8Array) => Promise<boolean>;
 }
 
 export interface Model<S extends { slug: string }> {
@@ -10,7 +16,13 @@ export interface Model<S extends { slug: string }> {
 
   schema: z.Schema<S>;
 
-  onRead?: (fullPath: string, opts: OnReadOptions) => Promise<S | S[]>;
+  onRead?: (file: ReadData, opts: OnReadOptions) => Promise<S | S[]>;
+
+  onCreate?: (resource: S) => void;
+
+  onUpdate?: (resource: S) => void;
+
+  onDelete?: (slug: string) => void;
 }
 
 // deno-lint-ignore no-explicit-any
