@@ -1,9 +1,11 @@
 import { PageProps } from "$fresh/server.ts";
-import { BlogList } from "foblog";
+import { getBlogList } from "foblog";
 import { Wrapper } from "../../components/Wrapper.tsx";
 import { Paginator } from "foblog";
 
-export default function BlogPage({ url, data }: PageProps<BlogList>) {
+export default async function BlogPage({ url }: PageProps) {
+  const { posts, pagination } = await getBlogList();
+
   return (
     <Wrapper url={url} pageTitle="Blog">
       <div class="container max-w-3xl mx-auto">
@@ -13,7 +15,7 @@ export default function BlogPage({ url, data }: PageProps<BlogList>) {
 
         <hr className="my-4" />
 
-        {data.posts.map((post) => (
+        {posts.map((post) => (
           <a key={post.slug} class="block my-2" href={`/blog/${post.slug}`}>
             <h3 class="text-primary text-xl">{post.title}</h3>
             <p class="text-sm/tight">{post.summary}</p>
@@ -23,7 +25,7 @@ export default function BlogPage({ url, data }: PageProps<BlogList>) {
         <hr className="my-4" />
 
         <Paginator
-          {...data.pagination}
+          {...pagination}
           className={{
             root: "flex flex-row items-center",
             button: "text-md text-info",

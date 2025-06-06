@@ -1,14 +1,12 @@
-import { FobHead, Icon, Post } from "foblog";
+import { FobHead, getBlogList, Icon } from "foblog";
 import { PageProps } from "$fresh/server.ts";
 import { ArrowRight } from "../components/icons.tsx";
 import Hero from "../islands/Hero.tsx";
 import { postDate } from "../lib/datetime.ts";
 
-interface Props {
-  posts: Post[];
-}
+export default async function Home({ url }: PageProps) {
+  const { posts } = await getBlogList();
 
-export default function Home({ url, data }: PageProps<Props>) {
   return (
     <>
       <FobHead url={url} />
@@ -35,7 +33,7 @@ export default function Home({ url, data }: PageProps<Props>) {
                 <Icon icon={ArrowRight} className="ml-2 inline" />
               </a>
             </h2>
-            {data.posts.map((post) => (
+            {posts.map((post) => (
               <a key={post.slug} class="block my-2" href={`/blog/${post.slug}`}>
                 <h3 class="text-primary text-xl">{post.title}</h3>
                 <p class="text-sm/tight">{post.summary}</p>

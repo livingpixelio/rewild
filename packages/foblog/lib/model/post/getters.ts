@@ -1,4 +1,3 @@
-import { z } from "../../../deps.ts";
 import { config } from "../../../plugin/config.ts";
 import { Repository } from "../../../storage/db.ts";
 import { paginate } from "./index.ts";
@@ -18,3 +17,5 @@ export const getBlogList = async (page = 1): Promise<BlogList> => {
     pagination,
   };
 };
+
+export const getPost = Repository(post).get;

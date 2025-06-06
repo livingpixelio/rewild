@@ -3,23 +3,21 @@
 // import { path } from "../deps.ts";
 
 import { Plugin } from "$fresh/server.ts";
-import { startDb } from "../storage/db.ts";
+import { clearDb, startDb } from "../storage/db.ts";
+import { build } from "./build.ts";
 import { ConfigSetter, setConfig } from "./config.ts";
 
 startDb(await Deno.openKv());
 
-console.log("HELLO WORLD");
-
-const foblog = (config: ConfigSetter): Plugin => {
-  const _resolvedConfig = setConfig(config);
+export default (config: ConfigSetter): Plugin => {
+  setConfig(config);
 
   return {
     name: "foblog",
 
     buildStart: async () => {
-      // silence
+      // await clearDb();
+      await build(true);
     },
   };
 };
-
-export default foblog;

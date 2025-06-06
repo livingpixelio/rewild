@@ -1,5 +1,6 @@
 /// <reference lib="deno.unstable" />
 
+import { warn } from "../errors.ts";
 import { Model } from "../lib/model/Model.ts";
 
 let kv: Deno.Kv;
@@ -31,6 +32,9 @@ export const Repository = <S extends { slug: string }>(model: Model<S>) => {
       if (match.success) {
         return kv.set(["fob", model.name, slug], match.data).then(() => {
           return true;
+        }).catch((err) => {
+          warn(`Error while writing: ${model.name}; Slug: ${slug}`);
+          throw err;
         });
       }
       throw match.error;
@@ -50,4 +54,12 @@ export const Repository = <S extends { slug: string }>(model: Model<S>) => {
       return true;
     },
   };
+};
+
+export const clearDb = async () => {
+  const all = kv.list({ prefix: ["fob"] });
+  for await (const item of all) {
+    kv.delete(item.key);
+  }
+  return true;
 };

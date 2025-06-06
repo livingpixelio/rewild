@@ -1,23 +1,39 @@
-import { PageProps } from "$fresh/server.ts";
-import type { Post } from "foblog";
-import { Icon } from "foblog";
+import { Handler, PageProps } from "$fresh/server.ts";
+import type { PostTy } from "foblog";
+import { CreateMd, getPost, Icon } from "foblog";
 
 import { ArrowLeft } from "../../components/icons.tsx";
 import { postDate } from "../../lib/datetime.ts";
 import { Wrapper } from "../../components/Wrapper.tsx";
 import { BannerImage } from "../../islands/BannerImage.tsx";
 
-export default function PostPage({ url, data }: PageProps<Post>) {
+interface Props {
+  post: PostTy;
+}
+
+export const handler: Handler<Props> = async (_req, ctx) => {
+  const post = await getPost(ctx.params.slug);
+  if (!post) {
+    return ctx.renderNotFound();
+  }
+  return ctx.render({ post });
+};
+
+const Md = CreateMd();
+
+export default function PostPage({ url, data }: PageProps<Props>) {
+  const { post } = data;
+
   return (
     <Wrapper
       url={url}
       pageTitle="Blog"
-      pageDescription={data.summary}
-      pageSocialImage={data.image}
+      pageDescription={post.summary}
+      pageSocialImage={post.image}
     >
       <BannerImage
-        src={data.banner_image}
-        alt={`Banner image for ${data.title}`}
+        src={post.banner_image}
+        alt={`Banner image for ${post.title}`}
       />
       <div class="container max-w-3xl mx-auto">
         <p class="text-xs font-bold my-4">
@@ -28,17 +44,17 @@ export default function PostPage({ url, data }: PageProps<Post>) {
         </p>
 
         <h1 class="text-info text-2xl font-bold my-4">
-          {data.title}
+          {post.title}
         </h1>
         <p class="text-xs font-bold my-4">
-          {postDate(data.date_published)}
+          {postDate(post.date_published)}
         </p>
 
         <hr className="my-4" />
 
         <div className="content">
           <h2>
-            <strong>!!! Need to put the md component here !!!</strong>
+            <Md node={post.content} />
           </h2>
         </div>
 

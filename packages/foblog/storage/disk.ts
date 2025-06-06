@@ -57,7 +57,7 @@ export const buildLs = async (
 
 export const openFile = async (entry: Deno.DirEntry) => {
   const fullPath = path.join(CONTENT_DIR, entry.name);
-  const extension = path.extname(fullPath);
+  const extension = path.extname(fullPath).trim();
   const filename = path.basename(fullPath, path.extname(fullPath));
   const data = await Deno.readFile(fullPath);
   const checksum = await getChecksum(data);

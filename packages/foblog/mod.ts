@@ -1,6 +1,5 @@
-import foblog from "./plugin/mod.ts";
+export type { FoblogPluginConfig } from "./plugin/index.ts";
+export * from "./lib/index.ts";
+
+import foblog from "./plugin/plugin.ts";
 export default foblog;
-
-export type { FoblogPluginConfig } from "./plugin/mod.ts";
-
-export * from "./lib/mod.ts";

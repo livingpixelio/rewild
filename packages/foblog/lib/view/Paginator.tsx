@@ -7,7 +7,7 @@ import {
 import { Icon } from "./Icon.tsx";
 import { classNames as cn } from "./formatters.ts";
 import type { FunctionComponent } from "../../deps.ts";
-import { Pagination } from "../model/mod.ts";
+import { Pagination } from "../model/index.ts";
 
 export interface PaginatorProps extends Pagination {
   className?: {

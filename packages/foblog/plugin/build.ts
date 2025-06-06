@@ -1,5 +1,5 @@
 import { AnyModel, ReadData } from "../lib/model/Model.ts";
-import { post } from "foblog";
+import { post } from "../lib/index.ts";
 import { Repository } from "../storage/db.ts";
 import {
   buildLs,
@@ -13,7 +13,6 @@ import {
 
 const LsRepository = Repository(LsModel);
 
-// never run buildResources more than once concurrently
 export const doBuild = (...models: AnyModel[]) => {
   const runModels = (
     file: ReadData,
@@ -24,6 +23,7 @@ export const doBuild = (...models: AnyModel[]) => {
       if (!model.onRead) return [];
 
       const resource = model.onRead(file, { isUpdate });
+      if (!resource) return Promise.resolve([]);
       const resources = Array.isArray(resource) ? resource : [resource];
 
       return Promise.all(
@@ -106,6 +106,8 @@ export const handleBuildError =
     if (isProduction) {
       throw error;
     }
+
+    return false;
   };
 
 export const setupListener = () => {};

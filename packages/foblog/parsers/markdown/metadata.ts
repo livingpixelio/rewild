@@ -2,7 +2,7 @@ import { parseYaml } from "../../deps.ts";
 import { isLeaf, LeafDirective, TextDirective } from "./MdastNode.ts";
 // import { parseWf } from "../../db/index.ts";
 
-import type { Post } from "../../lib/mod.ts";
+import type { PostTy } from "../../lib/index.ts";
 import type { MdastNode, Root, Text, Yaml } from "./MdastNode.ts";
 
 export const flattenTree = (tree: MdastNode): MdastNode[] => {
@@ -27,7 +27,7 @@ export const selectNodes =
 const normalDate = (date?: string) =>
   date ? new Date(date).toISOString() : undefined;
 
-export const getPostMetadata = (content: Root): Partial<Post> => {
+export const getPostMetadata = (content: Root): Partial<PostTy> => {
   const selector = selectNodes(flattenTree(content));
   const yaml = selector<Yaml>("yaml");
 
@@ -36,15 +36,14 @@ export const getPostMetadata = (content: Root): Partial<Post> => {
 
   const content_text = selector<Text>("text")
     .map((node) => node.value)
-    .join(" ");
+    .join("\n\n");
 
   return {
-    title: data.title,
-    summary: data.summary,
-    image: data.image,
-    banner_image: data.banner_image,
-    date_published: normalDate(data.date_published),
-    external_url: data.external_url,
+    summary: data.summary || undefined,
+    image: data.image || undefined,
+    banner_image: data.banner_image || undefined,
+    date_published: normalDate(data.date_published) || undefined,
+    external_url: data.external_url || undefined,
     content_text,
   };
 };

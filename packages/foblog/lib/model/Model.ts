@@ -11,12 +11,16 @@ interface OnReadOptions {
   isUpdate: boolean;
 }
 
-export interface Model<S extends { slug: string }> {
+interface BaseSchema {
+  slug: string;
+}
+
+export interface Model<S extends BaseSchema> {
   name: string;
 
   schema: z.Schema<S>;
 
-  onRead?: (file: ReadData, opts: OnReadOptions) => S | [];
+  onRead?: (file: ReadData, opts: OnReadOptions) => S | [] | null;
 
   onCreate?: (resource: S) => Promise<void>;
 
@@ -26,4 +30,4 @@ export interface Model<S extends { slug: string }> {
 }
 
 // deno-lint-ignore no-explicit-any
-export type AnyModel = Model<{ slug: string } & Record<string, any>>;
+export type AnyModel = Model<BaseSchema & any>;
