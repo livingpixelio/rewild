@@ -1,6 +1,6 @@
 import { AnyModel, ReadData } from "../lib/model/Model.ts";
 import { post } from "foblog";
-import { Table } from "../storage/db.ts";
+import { Repository } from "../storage/db.ts";
 import {
   buildLs,
   findPrevEntry,
@@ -11,7 +11,7 @@ import {
   resourcesToDelete,
 } from "../storage/disk.ts";
 
-const LsTable = Table(LsModel);
+const LsRepository = Repository(LsModel);
 
 // never run buildResources more than once concurrently
 export const doBuild = (...models: AnyModel[]) => {
@@ -20,7 +20,7 @@ export const doBuild = (...models: AnyModel[]) => {
     isUpdate: boolean,
   ): Promise<Resource[]> => {
     return Promise.all(models.map((model) => {
-      const table = Table(model);
+      const table = Repository(model);
       if (!model.onRead) return [];
 
       const resource = model.onRead(file, { isUpdate });
@@ -45,7 +45,7 @@ export const doBuild = (...models: AnyModel[]) => {
   };
 
   const doIt = async () => {
-    const prevLs = await LsTable.get("ls");
+    const prevLs = await LsRepository.get("ls");
     const compareEntries = findPrevEntry(prevLs);
 
     const nextLs: Ls = await buildLs(async (entry) => {
@@ -81,7 +81,7 @@ export const doBuild = (...models: AnyModel[]) => {
       resourcesToDelete(prevLs, nextLs).map(async (resource) => {
         const model = models.find((model) => model.name === resource.type);
         if (!model) return;
-        await Table(model).remove(resource.slug);
+        await Repository(model).remove(resource.slug);
 
         if (model.onDelete) {
           await model.onDelete(resource.slug);
@@ -90,7 +90,7 @@ export const doBuild = (...models: AnyModel[]) => {
       }),
     );
 
-    await LsTable.upsert("ls", nextLs);
+    await LsRepository.upsert("ls", nextLs);
 
     return true;
   };

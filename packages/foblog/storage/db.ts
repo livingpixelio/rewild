@@ -10,7 +10,7 @@ export const startDb = (db?: Deno.Kv) => {
   }
 };
 
-export const Table = <S extends { slug: string }>(model: Model<S>) => {
+export const Repository = <S extends { slug: string }>(model: Model<S>) => {
   return {
     getAll: async () => {
       const all = kv.list<S>({ prefix: ["fob", model.name] });
