@@ -5,6 +5,7 @@ import {
   buildLs,
   findPrevEntry,
   Ls,
+  LsEntry,
   LsModel,
   openFile,
   Resource,
@@ -15,7 +16,7 @@ import { config } from "./config.ts";
 
 const LsRepository = Repository(LsModel);
 
-export const doBuild = (...models: AnyModel[]) => {
+export const ContentBuilder = (...models: AnyModel[]) => {
   const runModels = (
     file: ReadData,
     isUpdate: boolean,
@@ -46,59 +47,84 @@ export const doBuild = (...models: AnyModel[]) => {
     })).then((results) => results.flat());
   };
 
+  const doFile = async (
+    entry: Deno.DirEntry | string,
+    compareEntries: (filename: string, extension: string) => LsEntry | null,
+  ) => {
+    const file = await openFile(entry);
+    const prevEntry = compareEntries(file.filename, file.extension);
+
+    const metadata = {
+      basename: file.filename,
+      extension: file.extension,
+      checksum: file.checksum,
+    };
+
+    if (!prevEntry) {
+      const resources = await runModels(file, false);
+      return {
+        ...metadata,
+        resources,
+      };
+    }
+
+    if (prevEntry.checksum !== file.checksum) {
+      const resources = await runModels(file, true);
+      return {
+        ...metadata,
+        resources,
+      };
+    }
+
+    return prevEntry;
+  };
+
+  const deleteResource = async (resource: Resource) => {
+    const model = models.find((model) => model.name === resource.type);
+    if (!model) return;
+    await Repository(model).remove(resource.slug);
+
+    if (model.onDelete) {
+      await model.onDelete(resource.slug);
+    }
+    return true;
+  };
+
   const doIt = async () => {
     const prevLs = await LsRepository.get("ls");
     const compareEntries = findPrevEntry(prevLs);
 
-    const nextLs: Ls = await buildLs(async (entry) => {
-      const file = await openFile(entry);
-      const prevEntry = compareEntries(file.filename, file.extension);
-
-      const metadata = {
-        basename: file.filename,
-        extension: file.extension,
-        checksum: file.checksum,
-      };
-
-      if (!prevEntry) {
-        const resources = await runModels(file, false);
-        return {
-          ...metadata,
-          resources,
-        };
-      }
-
-      if (prevEntry.checksum !== file.checksum) {
-        const resources = await runModels(file, true);
-        return {
-          ...metadata,
-          resources,
-        };
-      }
-
-      return prevEntry;
+    const nextLs: Ls = await buildLs((entry) => {
+      return doFile(entry, compareEntries);
     });
 
     await Promise.all(
-      resourcesToDelete(prevLs, nextLs).map(async (resource) => {
-        const model = models.find((model) => model.name === resource.type);
-        if (!model) return;
-        await Repository(model).remove(resource.slug);
-
-        if (model.onDelete) {
-          await model.onDelete(resource.slug);
-        }
-        return true;
+      resourcesToDelete(prevLs, nextLs).map((resource) => {
+        return deleteResource(resource);
       }),
     );
 
     await LsRepository.upsert("ls", nextLs);
 
-    return true;
+    return nextLs;
   };
 
-  return (isProduction?: boolean) =>
-    doIt().catch(handleBuildError(isProduction));
+  return {
+    build: (isProduction?: boolean) =>
+      doIt().catch(handleBuildError(isProduction)),
+
+    watch: async (
+      onChange: (digest: string, watcher: Deno.FsWatcher) => void,
+    ) => {
+      const prevLs = await LsRepository.get("ls");
+      const compareEntries = findPrevEntry(prevLs);
+
+      const watcher = Deno.watchFs(path.join(Deno.cwd(), config.contentDir));
+
+      for await (const entry of watcher) {
+      }
+    },
+  };
 };
 
 export const handleBuildError =
@@ -112,12 +138,4 @@ export const handleBuildError =
     return false;
   };
 
-export const build = doBuild(post);
-
-export const setupListener = async () => {
-  const watcher = Deno.watchFs(path.join(Deno.cwd(), config.contentDir));
-
-  for await (const event of watcher) {
-    console.log(event);
-  }
-};
+export const contentBuilder = ContentBuilder(post);

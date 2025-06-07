@@ -4,7 +4,6 @@ import { config } from "../plugin/config.ts";
 import { slugify } from "../parsers/index.ts";
 
 const CONTENT_DIR = path.join(Deno.cwd(), config.contentDir);
-const ATTACHMENTS_DIR = path.join(Deno.cwd(), config.attachmentsDir);
 
 const LsSchema = z.object({
   slug: z.string(),
@@ -55,9 +54,11 @@ export const buildLs = async (
   };
 };
 
-export const openFile = async (entry: Deno.DirEntry) => {
-  const fullPath = path.join(CONTENT_DIR, entry.name);
-  const extension = path.extname(fullPath).trim();
+export const openFile = async (entry: Deno.DirEntry | string) => {
+  const fullPath = typeof entry === "string"
+    ? entry
+    : path.join(CONTENT_DIR, entry.name);
+  const extension = path.extname(fullPath);
   const filename = path.basename(fullPath, path.extname(fullPath));
   const data = await Deno.readFile(fullPath);
   const checksum = await getChecksum(data);
@@ -101,13 +102,4 @@ export const resourcesToDelete = (
       prevItem.type === nextItem.type && prevItem.slug === nextItem.slug
     )
   );
-};
-
-export const writeFileToStatic = (
-  filename: string,
-  extension: string,
-  binary: Uint8Array,
-) => {
-  const destPath = path.join(ATTACHMENTS_DIR, `${filename}.${extension}`);
-  return Deno.writeFile(destPath, binary);
 };

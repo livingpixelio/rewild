@@ -4,7 +4,7 @@
 
 import { Plugin } from "$fresh/server.ts";
 import { startDb } from "../storage/db.ts";
-import { build } from "./build.ts";
+import { contentBuilder } from "./build.ts";
 import { ConfigSetter, setConfig } from "./config.ts";
 
 startDb(await Deno.openKv());
@@ -16,8 +16,7 @@ export default (config: ConfigSetter): Plugin => {
     name: "foblog",
 
     buildStart: async () => {
-      // await clearDb();
-      await build(true);
+      await contentBuilder.build(true);
     },
   };
 };

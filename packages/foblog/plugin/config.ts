@@ -25,7 +25,6 @@ export interface PluginConfig {
     sizes: number[];
   };
 
-  attachmentsDir: string;
   favicon: string;
 }
 
@@ -47,7 +46,6 @@ const DEFAULT_CONFIG: PluginConfig = {
 
   images: { sizes: Array(10).fill(null).map((_, idx) => (idx + 1) * 200) },
 
-  attachmentsDir: "static/_wf",
   favicon: "/favicon.ico",
 };
 
