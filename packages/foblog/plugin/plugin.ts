@@ -3,7 +3,7 @@
 // import { path } from "../deps.ts";
 
 import { Plugin } from "$fresh/server.ts";
-import { clearDb, startDb } from "../storage/db.ts";
+import { startDb } from "../storage/db.ts";
 import { build } from "./build.ts";
 import { ConfigSetter, setConfig } from "./config.ts";
 

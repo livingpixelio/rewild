@@ -10,6 +10,8 @@ import {
   Resource,
   resourcesToDelete,
 } from "../storage/disk.ts";
+import { path } from "../deps.ts";
+import { config } from "./config.ts";
 
 const LsRepository = Repository(LsModel);
 
@@ -110,6 +112,12 @@ export const handleBuildError =
     return false;
   };
 
-export const setupListener = () => {};
-
 export const build = doBuild(post);
+
+export const setupListener = async () => {
+  const watcher = Deno.watchFs(path.join(Deno.cwd(), config.contentDir));
+
+  for await (const event of watcher) {
+    console.log(event);
+  }
+};
