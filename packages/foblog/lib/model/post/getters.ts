@@ -8,7 +8,7 @@ export interface BlogList {
   pagination: Pagination;
 }
 
-export const BlogList = (options: Partial<PaginationOptions>) => {
+export const BlogList = (options: Partial<PaginationOptions> = {}) => {
   const paginate = Paginate(options);
 
   return async (url: string | URL): Promise<BlogList> => {

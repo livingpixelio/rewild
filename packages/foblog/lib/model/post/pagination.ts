@@ -48,7 +48,7 @@ export interface Pagination {
   };
 }
 
-export const Paginate = (options: Partial<PaginationOptions>) => {
+export const Paginate = (options: Partial<PaginationOptions> = {}) => {
   const { decodeUrl, encodeUrl, perPage } = {
     ...paginationOptionsDefaults,
     ...options,
