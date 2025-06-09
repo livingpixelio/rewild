@@ -11,7 +11,7 @@ export interface BlogList {
 export const BlogList = (options: Partial<PaginationOptions> = {}) => {
   const paginate = Paginate(options);
 
-  return async (url: string | URL): Promise<BlogList> => {
+  return async (url?: string | URL | null): Promise<BlogList> => {
     const all = await Repository(post).getAll();
     const pagination = paginate(all, url);
     return {

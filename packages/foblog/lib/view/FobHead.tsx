@@ -26,7 +26,16 @@ export const FobHead: FunctionComponent<FobHeadProps> = (props) => {
 
       {props.url ? <link rel="canonical" href={canonical} /> : null}
 
-      <link rel="alternate" type="application/json" href="/feed.json" />
+      {config.posts.feedUrl
+        ? (
+          <link
+            rel="alternate"
+            type="application/json"
+            href={config.posts.feedUrl}
+          />
+        )
+        : null}
+
       <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
 
       <meta name="og:type" content="website" />

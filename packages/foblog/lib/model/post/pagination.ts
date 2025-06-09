@@ -54,9 +54,9 @@ export const Paginate = (options: Partial<PaginationOptions> = {}) => {
     ...options,
   };
 
-  return (posts: PostTy[], url: string | URL): Pagination => {
+  return (posts: PostTy[], url?: string | URL | null): Pagination => {
     const total: number = posts.length;
-    const page = decodeUrl(url);
+    const page = url ? decodeUrl(url) : 1;
 
     const totalPages = Math.ceil(total / perPage);
     const isFirstPage = page < 2;

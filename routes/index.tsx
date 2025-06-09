@@ -1,8 +1,10 @@
-import { FobHead, getBlogList, Icon } from "foblog";
+import { BlogList, FobHead, Icon } from "foblog";
 import { PageProps } from "$fresh/server.ts";
 import { ArrowRight } from "../components/icons.tsx";
 import Hero from "../islands/Hero.tsx";
 import { postDate } from "../lib/datetime.ts";
+
+const getBlogList = BlogList();
 
 export default async function Home({ url }: PageProps) {
   const { posts } = await getBlogList();
