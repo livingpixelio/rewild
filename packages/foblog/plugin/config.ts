@@ -10,11 +10,8 @@ export interface PluginConfig {
   siteMainAuthor?: Author;
 
   posts: {
-    listUrl: (page: number) => string;
-    listPostsPerPage: number;
     permalink: (slug: string) => string;
     feedUrl: string;
-    feedPostsPerPage: number;
   };
 
   pages: {
@@ -33,11 +30,8 @@ const DEFAULT_CONFIG: PluginConfig = {
   contentDir: "content",
 
   posts: {
-    listUrl: (page) => page === 1 ? `/blog` : `/blog?page=${page}`,
-    listPostsPerPage: 10,
     permalink: (slug) => `/blog/${slug}`,
     feedUrl: `/feed.json`,
-    feedPostsPerPage: 10,
   },
 
   pages: {

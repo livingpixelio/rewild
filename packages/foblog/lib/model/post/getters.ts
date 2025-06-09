@@ -1,7 +1,6 @@
-import { config } from "../../../plugin/config.ts";
 import { Repository } from "../../../storage/db.ts";
-import { paginate } from "./index.ts";
-import { Pagination } from "./pagination.ts";
+import { Paginate } from "./index.ts";
+import { Pagination, PaginationOptions } from "./pagination.ts";
 import { post, PostTy } from "./post.ts";
 
 export interface BlogList {
@@ -9,12 +8,16 @@ export interface BlogList {
   pagination: Pagination;
 }
 
-export const getBlogList = async (page = 1): Promise<BlogList> => {
-  const all = await Repository(post).getAll();
-  const pagination = paginate(all, config.posts.listPostsPerPage)(page);
-  return {
-    posts: all.slice(pagination.params.skip, pagination.params.limit + 1),
-    pagination,
+export const BlogList = (options: Partial<PaginationOptions>) => {
+  const paginate = Paginate(options);
+
+  return async (url: string | URL): Promise<BlogList> => {
+    const all = await Repository(post).getAll();
+    const pagination = paginate(all, url);
+    return {
+      posts: all.slice(pagination.params.skip, pagination.params.limit + 1),
+      pagination,
+    };
   };
 };
 

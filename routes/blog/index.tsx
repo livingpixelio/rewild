@@ -4,7 +4,7 @@ import { Wrapper } from "../../components/Wrapper.tsx";
 import { Paginator } from "foblog";
 
 export default async function BlogPage({ url }: PageProps) {
-  const { posts, pagination } = await getBlogList();
+  const { posts, pagination } = await getBlogList()();
 
   return (
     <Wrapper url={url} pageTitle="Blog">

@@ -1,5 +1,32 @@
+import { z } from "../../../deps.ts";
+import { parseQuery } from "../../../parsers/index.ts";
 import { PostTy } from "./post.ts";
-import { config } from "../../../plugin/config.ts";
+
+export interface PaginationOptions {
+  perPage: number;
+  encodeUrl: (page: number) => string;
+  decodeUrl: (url: URL | string) => number;
+}
+
+const parser = parseQuery(
+  z.object({
+    page: z.coerce.number(),
+  }),
+);
+
+const paginationOptionsDefaults: PaginationOptions = {
+  perPage: 10,
+  encodeUrl: (page) => page === 1 ? `/blog` : `/blog?page=${page}`,
+  decodeUrl: (url) => {
+    try {
+      const _url: URL = typeof url === "string" ? new URL(url) : url;
+      const parsed = parser(_url.search);
+      return parsed.page;
+    } catch (_err) {
+      return 1;
+    }
+  },
+};
 
 export interface Pagination {
   page: number;
@@ -21,9 +48,15 @@ export interface Pagination {
   };
 }
 
-export const paginate =
-  (posts: PostTy[], perPage: number) => (page = 1): Pagination => {
+export const Paginate = (options: Partial<PaginationOptions>) => {
+  const { decodeUrl, encodeUrl, perPage } = {
+    ...paginationOptionsDefaults,
+    ...options,
+  };
+
+  return (posts: PostTy[], url: string | URL): Pagination => {
     const total: number = posts.length;
+    const page = decodeUrl(url);
 
     const totalPages = Math.ceil(total / perPage);
     const isFirstPage = page < 2;
@@ -37,10 +70,10 @@ export const paginate =
         skip: (page - 1) * perPage,
       },
       url: {
-        first: isFirstPage ? null : config.posts.listUrl(1),
-        prev: isFirstPage ? null : config.posts.listUrl(page - 1),
-        next: isLastPage ? null : config.posts.listUrl(page + 1),
-        last: isLastPage ? null : config.posts.listUrl(total),
+        first: isFirstPage ? null : encodeUrl(1),
+        prev: isFirstPage ? null : encodeUrl(page - 1),
+        next: isLastPage ? null : encodeUrl(page + 1),
+        last: isLastPage ? null : encodeUrl(total),
       },
       summary: {
         from: (page - 1) * perPage + 1,
@@ -49,3 +82,4 @@ export const paginate =
       },
     };
   };
+};
