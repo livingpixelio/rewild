@@ -119,9 +119,48 @@ export const ContentBuilder = (...models: AnyModel[]) => {
       const prevLs = await LsRepository.get("ls");
       const compareEntries = findPrevEntry(prevLs);
 
-      const watcher = Deno.watchFs(path.join(Deno.cwd(), config.contentDir));
+      const watcher = Deno.watchFs(path.join(Deno.cwd(), config.contentDir), {
+        recursive: false,
+      });
 
-      for await (const entry of watcher) {
+      const handleEntryPath = (
+        kind: Deno.FsEvent["kind"],
+        fullPath: string,
+      ) => {
+        const extension = path.extname(fullPath);
+        const filename = path.basename(fullPath, path.extname(fullPath));
+        const prev = compareEntries(filename, extension);
+
+        switch (kind) {
+          case "create": {
+            if (!prev) {
+              onChange(`modify:${fullPath}`, watcher);
+            }
+            return;
+          }
+
+          case "modify": {
+            openFile(fullPath).then((file) => {
+              if (prev?.checksum !== file.checksum) {
+                onChange(`modify:${fullPath}`, watcher);
+              }
+            });
+            return;
+          }
+
+          case "remove": {
+            if (prev) {
+              onChange(`remove:${fullPath}`, watcher);
+            }
+            return;
+          }
+        }
+      };
+
+      for await (const event of watcher) {
+        event.paths.forEach((path) => {
+          handleEntryPath(event.kind, path);
+        });
       }
     },
   };
