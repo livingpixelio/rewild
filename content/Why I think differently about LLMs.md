@@ -11,6 +11,8 @@ attachments:
 ---
 When I was in grad school I studied a protein called Fus2p. Fus2p exists in baker's yeast: the yeast responsible for making bread, beer, and for a surprising amount of our knowledge about how cells work. It is not related (in an obvious way) to any protein that exists in humans and it participates in the biological process of fusing two yeast cells together. This process is called "mating" but it probably isn't related (by evolution) to the fusion of mammalian gametes.
 
+![[neurons.jpg]]
+
 - with DATA
 - another list
 - items
@@ -19,7 +21,7 @@ There are only a few labs in the world interested in Fus2p and the direct concer
 
 I thought about this when I heard Sam Altman's claim that ChatGPT will soon be able to answer questions at the level of an advanced sciences PhD student. What does this even mean? How is it possible that enough training data exists in such micro-fields that an LLM would be able to answer at a level approaching someone who is an expert?
 
-I have this constant disconnect when I talk to people about AI that I think comes down the following: most people, even if they claim to know otherwise, are under the impression that what the machines are doing is thinking or reasoning. Even the name "artificial intelligence" implies this. There's nothing new here: chess engines can clearly "think", but this idea is old enough now that it doesn't surprise anyone.
+I have this constant disconnect when I talk to people about AI that I think comes down the following: most people, even if they claim to know otherwise, are under the impression that what the machines are doing is thinking or reasoning. Even the name "artificial intelligence" implies this. [[Link to another post]] There's nothing new here: chess engines can clearly "think", but this idea is old enough now that it doesn't surprise anyone.
 
 The disconnect happens when it begins to appear that the engineers or the GPUs or even the model itself is the entity making the magic happen. Someone super-smart built some super-smart software, and all they needed was some training data. That wasn't a problem because the internet provides a huge source, for free.
 
