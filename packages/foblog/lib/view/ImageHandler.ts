@@ -3,6 +3,8 @@ import { FreshContext, z } from "../../deps.ts";
 import { getErrorMessage, HttpError, warn } from "../../errors.ts";
 import { parseQuery } from "../../parsers/index.ts";
 import { Repository } from "../../storage/db.ts";
+import { getAttachmentPath, getContentPath } from "../../storage/disk.ts";
+import { image } from "../model/index.ts";
 
 interface ImageParams {
   slug: string;
@@ -58,28 +60,18 @@ export const ImageHandler = (
     }
 
     const sizes = imageData.sizes.slice().sort((a, b) => a.size - b.size);
-    const size = sizes.find((size) => width !== null && size.size >= width) ||
-      sizes[sizes.length - 1];
+    const size = typeof params.width === "number"
+      ? sizes.find((size) => size.size >= (params.width as number))
+      : null;
 
-    return createItemPipeline<TyImageSchema>(
-      "image",
-      request,
-      context,
-      slugParam,
-    )
-      .toResponse(async (wfGet) => {
-        const imageData = wfGet.data;
-        if (!imageData) {
-          throw new WfError(404);
-        }
+    const attachmentPath = size ? getAttachmentPath(size?.filename) : null;
+    console.log(attachmentPath);
 
-        const filepath = path.join(
-          Deno.cwd(),
-          config.attachmentsDir,
-          size.attachment.filename,
-        );
-        const file = await Deno.open(filepath, { read: true });
-        return new Response(file.readable);
-      });
+    const filepath = (size && attachmentPath)
+      ? attachmentPath
+      : getContentPath(imageData.originalFilename);
+
+    const file = await Deno.open(filepath, { read: true });
+    return new Response(file.readable);
   };
 };

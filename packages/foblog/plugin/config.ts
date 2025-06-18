@@ -54,16 +54,20 @@ export type ConfigSetter =
 export let config: PluginConfig = DEFAULT_CONFIG;
 
 export const setConfig = (
-  setConfig: ConfigSetter,
+  configSetter: ConfigSetter,
   freshConfig?: FreshConfig,
 ) => {
-  if (typeof setConfig === "function") {
-    config = setConfig(DEFAULT_CONFIG);
+  if (typeof configSetter === "function") {
+    config = {
+      ...configSetter(DEFAULT_CONFIG),
+      freshConfig,
+    };
     return config;
   }
   config = {
     ...DEFAULT_CONFIG,
-    ...setConfig,
+    ...configSetter,
+    freshConfig,
   };
 
   return { ...config, freshConfig };

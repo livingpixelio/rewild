@@ -2,8 +2,12 @@ import { crypto, encodeHex, path, z } from "../deps.ts";
 import { Model } from "../lib/model/Model.ts";
 import { config } from "../plugin/config.ts";
 import { slugify } from "../parsers/index.ts";
+import { exists } from "$std/fs/exists.ts";
 
 const CONTENT_DIR = path.join(Deno.cwd(), config.contentDir);
+
+export const getContentPath = (filename: string) =>
+  path.join(CONTENT_DIR, filename);
 
 const LsSchema = z.object({
   slug: z.string(),
@@ -57,7 +61,7 @@ export const buildLs = async (
 export const openFile = async (entry: Deno.DirEntry | string) => {
   const fullPath = typeof entry === "string"
     ? entry
-    : path.join(CONTENT_DIR, entry.name);
+    : getContentPath(entry.name);
   const extension = path.extname(fullPath);
   const filename = path.basename(fullPath, path.extname(fullPath));
   const data = await Deno.readFile(fullPath);
@@ -109,4 +113,16 @@ export const getAttachmentPath = (filename: string) => {
   if (!freshConfig?.build?.outDir) return null;
 
   return path.join(freshConfig.build.outDir, outDir, filename);
+};
+
+export const createOutDirIfNotExists = async () => {
+  const { freshConfig, outDir } = config;
+  if (!freshConfig?.build?.outDir) return;
+
+  const dirPath = path.join(freshConfig.build.outDir, outDir);
+
+  const outDirExists = await exists(dirPath);
+  if (!outDirExists) {
+    await Deno.mkdir(dirPath);
+  }
 };

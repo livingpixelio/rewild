@@ -13,6 +13,7 @@ import {
 } from "../storage/disk.ts";
 import { path } from "../deps.ts";
 import { config } from "./config.ts";
+import { image } from "foblog";
 
 const LsRepository = Repository(LsModel);
 
@@ -171,4 +172,4 @@ export const handleBuildError =
     return false;
   };
 
-export const contentBuilder = ContentBuilder(post);
+export const contentBuilder = ContentBuilder(post, image);
