@@ -20,11 +20,10 @@ export interface Model<S extends BaseSchema> {
 
   schema: z.Schema<S>;
 
-  onRead?: (file: ReadData, opts: OnReadOptions) => S | [] | null;
-
-  onCreate?: (resource: S) => Promise<void>;
-
-  onUpdate?: (resource: S) => Promise<void>;
+  onRead?: (
+    file: ReadData,
+    opts: OnReadOptions,
+  ) => Promise<S | S[] | null>;
 
   onDelete?: (slug: string) => Promise<void>;
 }

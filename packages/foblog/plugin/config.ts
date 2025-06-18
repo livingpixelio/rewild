@@ -1,13 +1,16 @@
+import { FreshConfig } from "$fresh/server.ts";
 import { Author } from "../mod.ts";
 
 export interface PluginConfig {
   developerWarnings: boolean;
   contentDir: string;
+  outDir: string;
 
   siteUrl?: string;
   siteTitle?: string;
   siteDescription?: string;
   siteMainAuthor?: Author;
+  favicon: string;
 
   posts: {
     permalink: (slug: string) => string;
@@ -22,12 +25,13 @@ export interface PluginConfig {
     sizes: number[];
   };
 
-  favicon: string;
+  freshConfig?: FreshConfig;
 }
 
 const DEFAULT_CONFIG: PluginConfig = {
   developerWarnings: true,
   contentDir: "content",
+  outDir: "fob",
 
   posts: {
     permalink: (slug) => `/blog/${slug}`,
@@ -51,6 +55,7 @@ export let config: PluginConfig = DEFAULT_CONFIG;
 
 export const setConfig = (
   setConfig: ConfigSetter,
+  freshConfig?: FreshConfig,
 ) => {
   if (typeof setConfig === "function") {
     config = setConfig(DEFAULT_CONFIG);
@@ -60,5 +65,6 @@ export const setConfig = (
     ...DEFAULT_CONFIG,
     ...setConfig,
   };
-  return config;
+
+  return { ...config, freshConfig };
 };

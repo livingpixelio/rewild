@@ -7,6 +7,7 @@ import * as $about from "./routes/about.tsx";
 import * as $blog_slug_ from "./routes/blog/[slug].tsx";
 import * as $blog_index from "./routes/blog/index.tsx";
 import * as $feed_json from "./routes/feed.json.ts";
+import * as $image_slug_ from "./routes/image/[slug].ts";
 import * as $index from "./routes/index.tsx";
 import * as $wf from "./routes/wf.tsx";
 import * as $BannerImage from "./islands/BannerImage.tsx";
@@ -24,6 +25,7 @@ const manifest = {
     "./routes/blog/[slug].tsx": $blog_slug_,
     "./routes/blog/index.tsx": $blog_index,
     "./routes/feed.json.ts": $feed_json,
+    "./routes/image/[slug].ts": $image_slug_,
     "./routes/index.tsx": $index,
     "./routes/wf.tsx": $wf,
   },

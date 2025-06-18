@@ -103,3 +103,10 @@ export const resourcesToDelete = (
     )
   );
 };
+
+export const getAttachmentPath = (filename: string) => {
+  const { freshConfig, outDir } = config;
+  if (!freshConfig?.build?.outDir) return null;
+
+  return path.join(freshConfig.build.outDir, outDir, filename);
+};

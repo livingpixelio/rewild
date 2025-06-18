@@ -36,17 +36,17 @@ export const post: Model<PostTy> = {
   name: "post",
   schema: PostSchema,
   onRead: (file) => {
-    if (file.extension.toLowerCase() !== ".md") return null;
+    if (file.extension.toLowerCase() !== ".md") return Promise.resolve(null);
 
     const decoder = new TextDecoder("utf-8");
     const text = decoder.decode(file.data);
     const content = parseMd(text);
     const metadata = getPostMetadata(content);
-    return {
+    return Promise.resolve({
       slug: file.defaultSlug,
       ...metadata,
       title: file.filename,
       content,
-    };
+    });
   },
 };

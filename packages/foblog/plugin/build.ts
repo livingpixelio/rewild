@@ -21,23 +21,17 @@ export const ContentBuilder = (...models: AnyModel[]) => {
     file: ReadData,
     isUpdate: boolean,
   ): Promise<Resource[]> => {
-    return Promise.all(models.map((model) => {
+    return Promise.all(models.map(async (model) => {
       const table = Repository(model);
       if (!model.onRead) return [];
 
-      const resource = model.onRead(file, { isUpdate });
+      const resource = await model.onRead(file, { isUpdate });
       if (!resource) return Promise.resolve([]);
       const resources = Array.isArray(resource) ? resource : [resource];
 
       return Promise.all(
         resources.map(async (resource) => {
           await table.upsert(resource.slug, resource);
-          if (model.onUpdate && isUpdate) {
-            await model.onUpdate(resource);
-          }
-          if (model.onCreate && !isUpdate) {
-            await model.onCreate(resource);
-          }
           return {
             type: model.name,
             slug: resource.slug,
