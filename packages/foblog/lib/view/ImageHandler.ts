@@ -64,12 +64,17 @@ export const ImageHandler = (
       ? sizes.find((size) => size.size >= (params.width as number))
       : null;
 
-    const attachmentPath = size ? getAttachmentPath(size?.filename) : null;
-    console.log(attachmentPath);
+    const attachmentPath = size
+      ? getAttachmentPath(size?.filename, context)
+      : null;
 
     const filepath = (size && attachmentPath)
       ? attachmentPath
       : getContentPath(imageData.originalFilename);
+
+    /* @TODO
+    * Resize on-the-fly and save to _fresh/fob, then we can use it next time
+    */
 
     const file = await Deno.open(filepath, { read: true });
     return new Response(file.readable);

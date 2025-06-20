@@ -1,4 +1,4 @@
-import { crypto, encodeHex, path, z } from "../deps.ts";
+import { crypto, encodeHex, FreshContext, path, z } from "../deps.ts";
 import { Model } from "../lib/model/Model.ts";
 import { config } from "../plugin/config.ts";
 import { slugify } from "../parsers/index.ts";
@@ -108,11 +108,16 @@ export const resourcesToDelete = (
   );
 };
 
-export const getAttachmentPath = (filename: string) => {
-  const { freshConfig, outDir } = config;
-  if (!freshConfig?.build?.outDir) return null;
+export const getAttachmentPath = (filename: string, context?: FreshContext) => {
+  let outDir: string = "";
+  if (context?.config.build.outDir) {
+    outDir = context?.config.build.outDir;
+  } else if (config.freshConfig) {
+    outDir = config.freshConfig?.build?.outDir || "";
+  }
+  if (!outDir) return null;
 
-  return path.join(freshConfig.build.outDir, outDir, filename);
+  return path.join(outDir, config.outDir, filename);
 };
 
 export const createOutDirIfNotExists = async () => {
