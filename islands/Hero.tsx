@@ -9,7 +9,7 @@ const Hero: FunctionComponent = ({ children }) => {
       className={`bg-dark bg-cover bg-fixed pb-20 mb-20`}
       style={{
         backgroundImage: `url(/image/forest1?width=${
-          typeof width === "number" ? width : "smallest"
+          typeof width === "number" ? width : 200
         })`,
       }}
     >

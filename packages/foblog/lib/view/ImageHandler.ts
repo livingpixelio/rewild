@@ -1,4 +1,5 @@
 import { Handler } from "$fresh/server.ts";
+import { exists } from "$std/fs/exists.ts";
 import { FreshContext, z } from "../../deps.ts";
 import { getErrorMessage, HttpError, warn } from "../../errors.ts";
 import { parseQuery } from "../../parsers/index.ts";
@@ -45,11 +46,10 @@ export const ImageHandler = (
       params = decodeUrl(request.url, context);
     } catch (err) {
       warn(getErrorMessage(err));
-      const httpError = new HttpError(
+      return new HttpError(
         400,
         `Unable to parse URL ${request.url}`,
-      );
-      return httpError.toHttp();
+      ).toHttp();
     }
 
     const imageData = await Repository(image).get(params.slug);
@@ -68,15 +68,17 @@ export const ImageHandler = (
       ? getAttachmentPath(size?.filename, context)
       : null;
 
-    const filepath = (size && attachmentPath)
-      ? attachmentPath
-      : getContentPath(imageData.originalFilename);
+    if (attachmentPath && await exists(attachmentPath)) {
+      const file = await Deno.open(attachmentPath, { read: true });
+      return new Response(file.readable);
+    }
 
-    /* @TODO
-    * Resize on-the-fly and save to _fresh/fob, then we can use it next time
-    */
+    const originalFilePath = getContentPath(imageData.originalFilename);
+    if (await exists(originalFilePath)) {
+      const file = await Deno.open(originalFilePath, { read: true });
+      return new Response(file.readable);
+    }
 
-    const file = await Deno.open(filepath, { read: true });
-    return new Response(file.readable);
+    return new HttpError(404).toHttp();
   };
 };

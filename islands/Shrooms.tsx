@@ -23,7 +23,7 @@ export const Shrooms: FunctionComponent = () => {
       class="hidden sm:block my-4 h-32 border-none bg-center bg-cover"
       style={{
         backgroundImage: `url(/image/mushrooms1?width=${
-          typeof width === "number" ? width : "smallest"
+          typeof width === "number" ? width : 200
         })`,
       }}
     />

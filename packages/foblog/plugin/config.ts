@@ -1,5 +1,6 @@
 import { FreshConfig } from "$fresh/server.ts";
 import { Author } from "../mod.ts";
+import { stringifyQuery } from "../parsers/index.ts";
 
 export interface PluginConfig {
   developerWarnings: boolean;
@@ -23,6 +24,12 @@ export interface PluginConfig {
 
   images: {
     sizes: number[];
+    getAttachmentFilename: (
+      slug: string,
+      extension: string,
+      size: number,
+    ) => string;
+    permalink: (slug: string, width?: number) => string;
   };
 
   freshConfig?: FreshConfig;
@@ -42,7 +49,18 @@ const DEFAULT_CONFIG: PluginConfig = {
     permalink: (path) => path,
   },
 
-  images: { sizes: Array(10).fill(null).map((_, idx) => (idx + 1) * 200) },
+  images: {
+    sizes: Array(10).fill(null).map((_, idx) => (idx + 1) * 200),
+    getAttachmentFilename: (
+      slug: string,
+      extension: string,
+      size: number,
+    ) => `${slug}_${size}${extension}`,
+    permalink: (slug, width) => {
+      const qs = stringifyQuery({ width });
+      return `/image/${slug}?${qs}`;
+    },
+  },
 
   favicon: "/favicon.ico",
 };

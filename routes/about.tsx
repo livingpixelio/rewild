@@ -1,14 +1,17 @@
 import { PageProps } from "$fresh/server.ts";
-import { FunctionComponent } from "preact";
 import { Wrapper } from "../components/Wrapper.tsx";
 import { HalfCut } from "../islands/HalfCut.tsx";
 import { Shrooms } from "../islands/Shrooms.tsx";
+import { EmDash } from "../components/chars.tsx";
+import { getImage } from "foblog";
 
-const About: FunctionComponent<PageProps> = ({ url }) => {
+export default async function About({ url }: PageProps) {
+  const image = await getImage("forest1");
+
   return (
     <Wrapper url={url} pageTitle="About">
       <header>
-        <HalfCut imgSlug="forest1" imgAlt="A lush forest">
+        <HalfCut image={image} alt="A lush forest">
           <blockquote>
             The troubles that have plagued “scientific” forestry, invented in
             the German lands in the late eighteenth century, and some forms of
@@ -40,7 +43,7 @@ const About: FunctionComponent<PageProps> = ({ url }) => {
             and “restoration forestry” equally famous (fig. 2.1).
           </blockquote>
           <p>
-            {"\u2014"} James C. Scott,{" "}
+            <EmDash /> James C. Scott,{" "}
             <em class="text-info">
               <a href="https://theanarchistlibrary.org/library/james-c-scott-two-cheers-for-anarchism">
                 Two Cheers for Anarchism
@@ -188,6 +191,4 @@ const About: FunctionComponent<PageProps> = ({ url }) => {
       </article>
     </Wrapper>
   );
-};
-
-export default About;
+}

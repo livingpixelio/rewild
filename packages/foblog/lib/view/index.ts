@@ -4,4 +4,8 @@ export { Icon, type IconProps } from "./Icon.tsx";
 export { CreateMd } from "./CreateMd.tsx";
 export { JsonFeedHandler } from "./JsonFeedHandler.tsx";
 export { ImageHandler } from "./ImageHandler.ts";
+export {
+  ImgLazyResponsive,
+  type ImgLazyResponsiveProps,
+} from "./ImgLazyResponsive.tsx";
 export { classNames } from "./formatters.ts";
