@@ -3,7 +3,8 @@
 // import { path } from "../deps.ts";
 
 import { Plugin } from "$fresh/server.ts";
-import { startDb } from "../storage/db.ts";
+import { log } from "../log.ts";
+import { clearDb, startDb } from "../storage/db.ts";
 import { createOutDirIfNotExists } from "../storage/disk.ts";
 import { contentBuilder } from "./build.ts";
 import { ConfigSetter, setConfig } from "./config.ts";
@@ -19,6 +20,8 @@ export default (config: ConfigSetter): Plugin => {
     buildStart: async (freshConfig) => {
       setConfig(config, freshConfig);
 
+      log("Building...");
+      await clearDb();
       await createOutDirIfNotExists();
 
       await contentBuilder.build(true);

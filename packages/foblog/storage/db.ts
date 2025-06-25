@@ -1,6 +1,6 @@
 /// <reference lib="deno.unstable" />
 
-import { warn } from "../errors.ts";
+import { warn } from "../log.ts";
 import { Model } from "../lib/model/Model.ts";
 
 let kv: Deno.Kv;

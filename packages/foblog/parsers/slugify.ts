@@ -11,6 +11,11 @@ export const slugify = (input: string) =>
     lower: true,
   });
 
+export const slugifyAsPath = (input: string) =>
+  input.split("/").map((part) => slugify(part)).join(
+    "/",
+  );
+
 export const slugFromFilename = (filePath: string) => {
   const filename = path.basename(filePath, path.extname(filePath));
   return slugify(filename);

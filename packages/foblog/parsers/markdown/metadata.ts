@@ -27,6 +27,14 @@ export const selectNodes =
 const normalDate = (date?: string) =>
   date ? new Date(date).toISOString() : undefined;
 
+export const getContentType = (content: Root): string | undefined => {
+  const selector = selectNodes(flattenTree(content));
+  const yaml = selector<Yaml>("yaml");
+  // deno-lint-ignore no-explicit-any
+  const data = yaml?.length ? parseYaml(yaml[0].value) : {} as any;
+  return data.type || undefined;
+};
+
 export const getPostMetadata = (content: Root): Partial<PostTy> => {
   const selector = selectNodes(flattenTree(content));
   const yaml = selector<Yaml>("yaml");

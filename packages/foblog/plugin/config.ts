@@ -3,7 +3,7 @@ import { Author } from "../mod.ts";
 import { stringifyQuery } from "../parsers/index.ts";
 
 export interface PluginConfig {
-  developerWarnings: boolean;
+  logLevel: "warn" | "verbose" | false;
   contentDir: string;
   outDir: string;
 
@@ -36,7 +36,7 @@ export interface PluginConfig {
 }
 
 const DEFAULT_CONFIG: PluginConfig = {
-  developerWarnings: true,
+  logLevel: "verbose",
   contentDir: "content",
   outDir: "fob",
 

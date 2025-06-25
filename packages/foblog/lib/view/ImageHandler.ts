@@ -1,7 +1,8 @@
 import { Handler } from "$fresh/server.ts";
 import { exists } from "$std/fs/exists.ts";
 import { FreshContext, z } from "../../deps.ts";
-import { getErrorMessage, HttpError, warn } from "../../errors.ts";
+import { warn } from "../../log.ts";
+import { getErrorMessage, HttpError } from "../../errors.ts";
 import { parseQuery } from "../../parsers/index.ts";
 import { Repository } from "../../storage/db.ts";
 import { getAttachmentPath, getContentPath } from "../../storage/disk.ts";

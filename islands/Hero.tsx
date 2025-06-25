@@ -35,7 +35,7 @@ export const HeroFullScreen: FunctionComponent = ({ children }) => {
       className={`bg-dark bg-cover bg-fixed h-screen`}
       style={{
         backgroundImage: `url(/image/forest1?width=${
-          typeof width === "number" ? width : "smallest"
+          typeof width === "number" ? width : 200
         })`,
       }}
     >

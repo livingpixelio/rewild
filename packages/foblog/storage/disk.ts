@@ -1,13 +1,16 @@
 import { crypto, encodeHex, FreshContext, path, z } from "../deps.ts";
 import { Model } from "../lib/model/Model.ts";
 import { config } from "../plugin/config.ts";
-import { slugify } from "../parsers/index.ts";
 import { exists } from "$std/fs/exists.ts";
+import { slugifyAsPath } from "../parsers/index.ts";
 
 const CONTENT_DIR = path.join(Deno.cwd(), config.contentDir);
+const IGNORE_DIR = ["templates", ".obsidian"];
 
-export const getContentPath = (filename: string) =>
-  path.join(CONTENT_DIR, filename);
+export const getContentPath = (filename: string, context?: string) =>
+  context
+    ? path.join(CONTENT_DIR, context, filename)
+    : path.join(CONTENT_DIR, filename);
 
 const LsSchema = z.object({
   slug: z.string(),
@@ -37,36 +40,49 @@ export const getChecksum = async (data: Uint8Array): Promise<string> => {
 };
 
 export const buildLs = async (
-  forEachFile: (entry: Deno.DirEntry) => Promise<LsEntry>,
+  forEachFile: (entry: Deno.DirEntry, context?: string) => Promise<LsEntry>,
+  contentDir = CONTENT_DIR,
 ): Promise<Ls> => {
-  const dir = Deno.readDir(CONTENT_DIR);
+  const dir = Deno.readDir(contentDir);
 
   let entries: LsEntry[] = [];
   for await (const dirEntry of dir) {
-    if (!dirEntry.isFile) {
-      continue;
+    if (dirEntry.isFile) {
+      const context = contentDir.replace(CONTENT_DIR, "").slice(1) || undefined;
+      const lsEntry = await forEachFile(dirEntry, context);
+      entries = [...entries, lsEntry];
+    } else if (dirEntry.isDirectory && !IGNORE_DIR.includes(dirEntry.name)) {
+      const result = await buildLs(
+        forEachFile,
+        path.join(contentDir, dirEntry.name),
+      );
+      entries = [...entries, ...result.files];
     }
-    const lsEntry = await forEachFile(dirEntry);
-    entries = [...entries, lsEntry];
   }
 
   const finishTime: number = Date.now();
-
   return {
     slug: `${finishTime}`,
     files: entries,
   };
 };
 
-export const openFile = async (entry: Deno.DirEntry | string) => {
+export const openFile = async (
+  entry: Deno.DirEntry | string,
+  context?: string,
+) => {
   const fullPath = typeof entry === "string"
     ? entry
-    : getContentPath(entry.name);
+    : getContentPath(entry.name, context);
+
   const extension = path.extname(fullPath);
-  const filename = path.basename(fullPath, path.extname(fullPath));
+  const basename = path.basename(fullPath, path.extname(fullPath));
+  const filename = context ? path.join(context, basename) : basename;
+
   const data = await Deno.readFile(fullPath);
   const checksum = await getChecksum(data);
-  const defaultSlug = slugify(filename);
+  const defaultSlug = slugifyAsPath(filename);
+
   return {
     filename,
     extension,

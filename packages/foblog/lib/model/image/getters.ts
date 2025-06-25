@@ -1,4 +1,4 @@
-import { warn } from "../../../errors.ts";
+import { warn } from "../../../log.ts";
 import { Repository } from "../../../storage/db.ts";
 import { image } from "./image.ts";
 
