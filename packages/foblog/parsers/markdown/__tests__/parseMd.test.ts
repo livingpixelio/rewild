@@ -8,6 +8,7 @@ const text = await Deno.readTextFile(path.join(__dirname, "testpost.md"));
 
 Deno.test("parser does not throw on valid markdown", () => {
   const result = parseMd(text);
+  console.log(result);
   assertEquals(result.type, "root");
 });
 

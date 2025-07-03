@@ -1,45 +1,45 @@
-import {
-  Literal,
-  Node,
-  remarkFrontmatter,
-  remarkParse,
-  Transformer,
-  unified,
-  visit,
-} from "../../deps.ts";
-import { MdastNode, Root } from "./MdastNode.ts";
+import { remarkFrontmatter, remarkParse, unified, visit } from "../../deps.ts";
+import { ParentOfText, Root, Text } from "./MdastNode.ts";
 
-const createTextVisit =
-  (...parsers: Array<(input: string) => MdastNode[]>) => (tree: Node) => {
-    parsers.forEach((parser) => {
-      visit(tree, ["text"], (node, i, parent) => {
-        if (node.type !== "text") {
-          return;
-        }
+import { parseCaption } from "./custom.ts";
 
-        const { value } = node as Literal;
+const transformTextNode = (
+  node: Text,
+  idx: number | undefined,
+  parent: ParentOfText | undefined,
+) => {
+  if (node.type !== "text") {
+    return;
+  }
 
-        const newNodes = parser(value as string);
+  const { value } = node;
 
-        if (newNodes.length === 1 && newNodes[0].type === "text") {
-          return;
-        }
+  const newNodes = parseCaption(value);
 
-        // deno-lint-ignore no-explicit-any
-        (parent as MdastNode as any).children.splice(i!, 1, ...newNodes);
-      });
-    });
-  };
+  if (newNodes.length === 1 && newNodes[0].type === "text") {
+    return;
+  }
 
-function customParsers(): Transformer {
-  return createTextVisit();
-}
+  if (!parent || !idx) return;
+
+  parent.children.splice(idx, 1, ...newNodes);
+};
 
 const pipeline = unified()
   // @ts-ignore: remarkParse definitions are not correct
   .use(remarkParse)
-  .use(remarkFrontmatter, ["yaml"]);
+  .use(remarkFrontmatter, ["yaml"])
+  .use(function () {
+    return function (tree: Root) {
+      visit(tree, "text", transformTextNode);
+    };
+  }).use(function toCompiler() {
+    const compiler = (node: Root) => node;
+
+    // @ts-ignore // unified's types sometimes really suck
+    this.compiler = compiler;
+  });
 
 export const parseMd = (md: string) => {
-  return pipeline.parse(md) as Root;
+  return pipeline.processSync(md).result as Root;
 };

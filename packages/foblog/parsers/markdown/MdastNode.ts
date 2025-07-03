@@ -152,6 +152,14 @@ export type Leaf =
 
 export type MdastNode = Root | Block | Inline | Attachment | Shortcode;
 
+export type ParentOfText =
+  | Heading
+  | Paragraph
+  | Link
+  | XLink
+  | Emphasis
+  | Strong;
+
 export const isLeaf = (node: MdastNode): node is Leaf => {
   return !(node as Root).children;
 };
