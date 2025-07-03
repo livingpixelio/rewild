@@ -32,10 +32,15 @@ export { slugify } from "https://deno.land/x/slugify@0.3.0/mod.ts";
 export { datetime } from "https://deno.land/x/ptera@v1.0.2/mod.ts";
 
 // markdown utils
-export { unified } from "https://esm.sh/unified@11.0.5";
+export { type Transformer, unified } from "https://esm.sh/unified@11.0.5";
 export { default as remarkParse } from "https://esm.sh/remark-parse@11.0.0";
 export { default as remarkFrontmatter } from "https://esm.sh/remark-frontmatter@5.0.0";
 export { default as remarkDirective } from "https://esm.sh/remark-directive@3.0.0";
+export { visit } from "https://esm.sh/unist-util-visit@5.0.0";
+export {
+  type Literal,
+  type Node,
+} from "https://esm.sh/@types/unist@3.0.3/index.d.ts";
 
 // image utils
 export * as IM from "https://deno.land/x/imagemagick_deno@0.0.31/mod.ts";

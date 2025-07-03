@@ -12,6 +12,8 @@ It can also contain code.
 const two = 1 + 1;
 ```
 
+And it can contain [UserDefinedComponents foo="bar"]
+
 ![[An image]]
 
 In conclusion, stuff happened.
