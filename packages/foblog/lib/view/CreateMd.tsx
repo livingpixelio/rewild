@@ -13,17 +13,25 @@ import type * as Mdast from "../../parsers/markdown/MdastNode.ts";
 
 // We use "any" here for props, because we do not know the type of the
 // components which are added by the user
-export type UserDefinedComponents = Record<
+export type ShortcodeComponents = Record<
   string,
   FunctionComponent<Record<string, string>>
 >;
 
+interface CreateMdOptions {
+  shortcodeComponents: ShortcodeComponents;
+}
+
 export const CreateMd = (
-  userDefinedComponents: UserDefinedComponents = {},
+  options?: Partial<CreateMdOptions>,
 ) => {
+  const { shortcodeComponents } = {
+    shortcodeComponents: {},
+    ...options,
+  };
+
   const MdComponent: FunctionComponent<{
     node?: Mdast.MdastNode;
-    userDefinedComponents?: UserDefinedComponents;
   }> = ({ node }) => {
     if (!node) return null;
 
@@ -42,7 +50,6 @@ export const CreateMd = (
       return (
         <MdComponent
           node={node.children[0]}
-          userDefinedComponents={userDefinedComponents}
         />
       );
     }
@@ -52,7 +59,6 @@ export const CreateMd = (
       : node.children.map((node) => (
         <MdComponent
           node={node}
-          userDefinedComponents={userDefinedComponents}
         />
       ));
 
@@ -118,7 +124,7 @@ export const CreateMd = (
       }
 
       case "shortcode": {
-        const Component = userDefinedComponents[node.name];
+        const Component = shortcodeComponents[node.name];
         if (!node.name || !Component) {
           return null;
         }
@@ -148,13 +154,11 @@ export const CreateMd = (
 
   const MdList: FunctionComponent<{
     node: Mdast.List;
-    userDefinedComponents?: UserDefinedComponents;
-  }> = ({ node, userDefinedComponents }) => {
+  }> = ({ node }) => {
     const children = node.children.map((child) => (
       <li>
         <MdComponent
           node={child}
-          userDefinedComponents={userDefinedComponents}
         />
       </li>
     ));
@@ -162,5 +166,9 @@ export const CreateMd = (
     return node.ordered ? <ol>{children}</ol> : <ul>{children}</ul>;
   };
 
-  return MdComponent;
+  const Md: FunctionComponent<{ node: Mdast.Root }> = ({ node }) => {
+    return <MdComponent node={node} />;
+  };
+
+  return Md;
 };

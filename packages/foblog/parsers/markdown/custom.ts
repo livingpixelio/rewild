@@ -1,8 +1,8 @@
 import { Text } from "./MdastNode.ts";
 
-export const parseCaption = (input: string): Text[] => {
+export const parseCaption = (input: string): Text[] | null => {
   if (!input) {
-    return [];
+    return null;
   }
 
   return [{ type: "text", value: input }];

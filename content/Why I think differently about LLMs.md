@@ -4,7 +4,7 @@ slug:
 date_published: 
 date_modified: 
 image: 
-banner_image: 
+banner_image: "![[scerevisiae.png]]"
 external_url: 
 tags: 
 attachments:

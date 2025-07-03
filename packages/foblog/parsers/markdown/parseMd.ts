@@ -1,10 +1,10 @@
 import { remarkFrontmatter, remarkParse, unified, visit } from "../../deps.ts";
-import { ParentOfText, Root, Text } from "./MdastNode.ts";
+import { MdastNode, ParentOfText, Root } from "./MdastNode.ts";
 
 import { parseCaption } from "./custom.ts";
 
 const transformTextNode = (
-  node: Text,
+  node: MdastNode,
   idx: number | undefined,
   parent: ParentOfText | undefined,
 ) => {
@@ -16,13 +16,20 @@ const transformTextNode = (
 
   const newNodes = parseCaption(value);
 
-  if (newNodes.length === 1 && newNodes[0].type === "text") {
+  if (
+    !newNodes ||
+    (newNodes.length === 1 && newNodes[0].type === "text") ||
+    !parent ||
+    !idx
+  ) {
     return;
   }
 
-  if (!parent || !idx) return;
-
   parent.children.splice(idx, 1, ...newNodes);
+
+  parent.children.forEach((child, idx) => {
+    transformTextNode(child, idx, parent);
+  });
 };
 
 const pipeline = unified()
@@ -36,7 +43,7 @@ const pipeline = unified()
   }).use(function toCompiler() {
     const compiler = (node: Root) => node;
 
-    // @ts-ignore // unified's types sometimes really suck
+    // @ts-ignore : unified's types sometimes really suck
     this.compiler = compiler;
   });
 

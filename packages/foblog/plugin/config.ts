@@ -1,6 +1,7 @@
 import { FreshConfig } from "$fresh/server.ts";
 import { Author } from "../mod.ts";
 import { stringifyQuery } from "../parsers/index.ts";
+import { Preloader } from "../preload/index.ts";
 
 export interface PluginConfig {
   logLevel: "warn" | "verbose" | false;
@@ -12,6 +13,8 @@ export interface PluginConfig {
   siteDescription?: string;
   siteMainAuthor?: Author;
   favicon: string;
+
+  preloaders: Array<Preloader>;
 
   posts: {
     permalink: (slug: string) => string;
@@ -39,6 +42,8 @@ const DEFAULT_CONFIG: PluginConfig = {
   logLevel: "verbose",
   contentDir: "content",
   outDir: "fob",
+
+  preloaders: [],
 
   posts: {
     permalink: (slug) => `/blog/${slug}`,
