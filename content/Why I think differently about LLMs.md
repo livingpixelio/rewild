@@ -11,13 +11,15 @@ attachments:
 ---
 When I was in grad school I studied a protein called Fus2p. Fus2p exists in baker's yeast: the yeast responsible for making bread, beer, and for a surprising amount of our knowledge about how cells work. It is not related (in an obvious way) to any protein that exists in humans and it participates in the biological process of fusing two yeast cells together. This process is called "mating" but it probably isn't related (by evolution) to the fusion of mammalian gametes.
 
-![[neurons.jpg]]> This is alt text
+![[neurons.jpg|This is alt text]]> This is alt text
 
 - with DATA
 - another list
 - items
 
 There are only a few labs in the world interested in Fus2p and the direct concerns around it. Studying it might be broadly interesting someday for a deeper understanding of membrane dynamics or cell signalling or *something*, but few working biologists will ever have heard of it. This is to a first approximation kind of the point of a graduate degree: to know more and more about less and less until you know everything about nothing. Or less cynically, by concentrating tremendous effort in a tiny realm of human knowledge, to push the front line of that knowledge ahead, by a tiny amount.
+
+::BlockComponentWithPreloadedData{myData="wf://demographics/shire?city=hobbiton"}
 
 I thought about this when I heard Sam Altman's claim that ChatGPT will soon be able to answer questions at the level of an advanced sciences PhD student. What does this even mean? How is it possible that enough training data exists in such micro-fields that an LLM would be able to answer at a level approaching someone who is an expert?
 

@@ -61,13 +61,6 @@ interface ThematicBreak {
   type: "thematicBreak";
 }
 
-export interface LeafDirective {
-  type: "leafDirective";
-  name: string;
-  // deno-lint-ignore no-explicit-any
-  attributes: Record<string, any>;
-}
-
 type Block =
   | Yaml
   | Heading
@@ -77,7 +70,7 @@ type Block =
   | ListItem
   | Code
   | ThematicBreak
-  | LeafDirective;
+  | Attachment;
 
 /**
  * Inline and text
@@ -89,6 +82,13 @@ interface Link {
   children: Inline[];
 }
 
+interface XLink {
+  type: "xlink";
+  filename: string;
+  url?: string;
+  children: Inline[];
+}
+
 interface Emphasis {
   type: "emphasis";
   children: Inline[];
@@ -96,14 +96,6 @@ interface Emphasis {
 
 interface Strong {
   type: "strong";
-  children: Inline[];
-}
-
-export interface TextDirective {
-  type: "textDirective";
-  name: string;
-  // deno-lint-ignore no-explicit-any
-  attributes: Record<string, any>;
   children: Inline[];
 }
 
@@ -125,32 +117,41 @@ export interface Image {
 
 type Inline =
   | Link
+  | XLink
+  | Image
   | Emphasis
   | Strong
-  | TextDirective
   | Text
-  | InlineCode
-  | Image;
+  | InlineCode;
 
 export type Branch = Paragraph;
+
+interface Attachment {
+  type: "attachment";
+  filename: string;
+  extension: string;
+  alt?: string;
+  src?: string;
+}
+
+export interface Shortcode {
+  type: "shortcode";
+  name: string;
+  [key: string]: string | undefined;
+}
 
 export type Leaf =
   | Yaml
   | ThematicBreak
-  | LeafDirective
   | Text
   | Code
   | InlineCode
-  | Image;
+  | Image
+  | Attachment
+  | Shortcode;
 
-export type MdastNode = Root | Block | Inline;
+export type MdastNode = Root | Block | Inline | Attachment | Shortcode;
 
 export const isLeaf = (node: MdastNode): node is Leaf => {
   return !(node as Root).children;
-};
-
-export const isComponent = (
-  node: MdastNode,
-): node is LeafDirective | TextDirective => {
-  return ["mdxJsxFlowElement", "mdxTextExpression"].includes(node.type);
 };

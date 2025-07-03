@@ -1,1 +1,1 @@
-This is a page inside a folder
+This is a page inside ![[mushrooms1.jpg]] a folder

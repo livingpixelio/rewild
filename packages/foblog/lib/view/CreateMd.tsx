@@ -15,10 +15,7 @@ import type * as Mdast from "../../parsers/markdown/MdastNode.ts";
 // components which are added by the user
 export type UserDefinedComponents = Record<
   string,
-  FunctionComponent<
-    // deno-lint-ignore no-explicit-any
-    any
-  >
+  FunctionComponent<Record<string, string>>
 >;
 
 export const CreateMd = (
@@ -120,17 +117,12 @@ export const CreateMd = (
         return <img src={node.url} alt={node.alt} />;
       }
 
-      case "leafDirective":
-      case "textDirective": {
+      case "shortcode": {
         const Component = userDefinedComponents[node.name];
         if (!node.name || !Component) {
           return null;
         }
-        return (
-          <Component>
-            {childNodes}
-          </Component>
-        );
+        return <Component {...node} />;
       }
     }
 

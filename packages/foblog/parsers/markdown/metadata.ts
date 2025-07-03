@@ -1,6 +1,5 @@
 import { parseYaml } from "../../deps.ts";
-import { isLeaf, LeafDirective, TextDirective } from "./MdastNode.ts";
-// import { parseWf } from "../../db/index.ts";
+import { isLeaf } from "./MdastNode.ts";
 
 import type { PostTy } from "../../lib/index.ts";
 import type { MdastNode, Root, Text, Yaml } from "./MdastNode.ts";
@@ -54,24 +53,4 @@ export const getPostMetadata = (content: Root): Partial<PostTy> => {
     external_url: data.external_url || undefined,
     content_text,
   };
-};
-
-export const getWfRequests = (content: Root): string[] => {
-  const selector = selectNodes(flattenTree(content));
-  const directives = selector<LeafDirective | TextDirective>(
-    "leafDirective",
-    "textDirective",
-  );
-  return directives.reduce((acc, directive) => {
-    const wf = Object.keys(directive.attributes).reduce((acc, key) => {
-      const value = directive.attributes[key];
-      if (typeof value !== "string") return acc;
-      /**
-       * @TODO need to put this back in somehow:
-       */
-      // if (!parseWf(value)) return acc;
-      return [...acc, value];
-    }, [] as string[]);
-    return [...acc, ...wf];
-  }, [] as string[]);
 };
