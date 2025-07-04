@@ -1,5 +1,9 @@
 import { z } from "../../../deps.ts";
-import { getPostMetadata, Mdast, parseMd } from "../../../parsers/index.ts";
+import {
+  getPostMetadata,
+  MdastNodeTy,
+  parseMd,
+} from "../../../parsers/index.ts";
 import { getContentType } from "../../../parsers/markdown/metadata.ts";
 import { disambiguateTitle } from "../../../parsers/title.ts";
 import { Model } from "../Model.ts";
@@ -11,7 +15,7 @@ export const PageSchema = z.object({
 });
 
 export interface PageTy extends z.infer<typeof PageSchema> {
-  content?: Mdast.Root;
+  content?: MdastNodeTy.Root;
 }
 
 export const page: Model<PageTy> = {

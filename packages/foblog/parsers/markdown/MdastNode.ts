@@ -20,7 +20,7 @@ export interface Heading {
   children: Inline[];
 }
 
-interface Paragraph {
+export interface Paragraph {
   type: "paragraph";
   children: Inline[];
 }
@@ -31,12 +31,12 @@ export interface List {
   children: Array<ListItem>;
 }
 
-interface ListItem {
+export interface ListItem {
   type: "listItem";
   children: [Paragraph | List];
 }
 
-interface Blockquote {
+export interface Blockquote {
   type: "blockquote";
   children: Paragraph[];
 }
@@ -51,17 +51,17 @@ export type Lang =
   | "python"
   | "php";
 
-interface Code {
+export interface Code {
   type: "code";
   value: string;
   lang: Lang;
 }
 
-interface ThematicBreak {
+export interface ThematicBreak {
   type: "thematicBreak";
 }
 
-type Block =
+export type Block =
   | Yaml
   | Heading
   | Paragraph
@@ -76,25 +76,25 @@ type Block =
  * Inline and text
  */
 
-interface Link {
+export interface Link {
   type: "link";
   url: string;
   children: Inline[];
 }
 
-interface XLink {
+export interface XLink {
   type: "xlink";
   filename: string;
   url?: string;
   children: Inline[];
 }
 
-interface Emphasis {
+export interface Emphasis {
   type: "emphasis";
   children: Inline[];
 }
 
-interface Strong {
+export interface Strong {
   type: "strong";
   children: Inline[];
 }
@@ -115,24 +115,26 @@ export interface Image {
   alt: string;
 }
 
-type Inline =
-  | Link
-  | XLink
-  | Image
-  | Emphasis
-  | Strong
-  | Text
-  | InlineCode;
-
 export type Branch = Paragraph;
 
-interface Attachment {
+export interface Attachment {
   type: "attachment";
   filename: string;
   extension: string;
   alt?: string;
-  src?: string;
+  url?: string;
 }
+
+export type Inline =
+  | Link
+  | XLink
+  | Image
+  | Attachment
+  | Shortcode
+  | Emphasis
+  | Strong
+  | Text
+  | InlineCode;
 
 export interface Shortcode {
   type: "shortcode";

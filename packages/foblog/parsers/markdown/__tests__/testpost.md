@@ -14,6 +14,6 @@ const two = 1 + 1;
 
 And it can contain [UserDefinedComponents foo="bar"]
 
-![[An image]]
+![[An image.png]]
 
 In conclusion, stuff happened.

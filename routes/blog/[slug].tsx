@@ -53,9 +53,7 @@ export default function PostPage({ url, data }: PageProps<Props>) {
         <hr className="my-4" />
 
         <div className="content">
-          <h2>
-            <Md node={post.content} />
-          </h2>
+          <Md node={post.content} />
         </div>
 
         <hr className="my-4" />

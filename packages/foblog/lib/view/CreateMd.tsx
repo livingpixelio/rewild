@@ -166,7 +166,7 @@ export const CreateMd = (
     return node.ordered ? <ol>{children}</ol> : <ul>{children}</ul>;
   };
 
-  const Md: FunctionComponent<{ node: Mdast.Root }> = ({ node }) => {
+  const Md: FunctionComponent<{ node?: Mdast.Root }> = ({ node }) => {
     return <MdComponent node={node} />;
   };
 

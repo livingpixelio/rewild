@@ -1,7 +1,7 @@
 import { remarkFrontmatter, remarkParse, unified, visit } from "../../deps.ts";
 import { MdastNode, ParentOfText, Root } from "./MdastNode.ts";
 
-import { parseCaption } from "./custom.ts";
+import { parseCustom } from "./custom.ts";
 
 const transformTextNode = (
   node: MdastNode,
@@ -14,13 +14,13 @@ const transformTextNode = (
 
   const { value } = node;
 
-  const newNodes = parseCaption(value);
+  const newNodes = parseCustom(value);
 
   if (
     !newNodes ||
     (newNodes.length === 1 && newNodes[0].type === "text") ||
     !parent ||
-    !idx
+    typeof idx === "undefined"
   ) {
     return;
   }

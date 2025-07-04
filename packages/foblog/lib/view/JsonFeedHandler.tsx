@@ -1,17 +1,17 @@
 import { BlogList, PaginationOptions } from "../model/index.ts";
-import { CreateMd, UserDefinedComponents } from "./CreateMd.tsx";
+import { CreateMd, ShortcodeComponents } from "./CreateMd.tsx";
 import { config } from "../../plugin/config.ts";
 import { Handler } from "$fresh/server.ts";
 import { renderToString } from "../../deps.ts";
 
-interface JsonFeedHandlerOptions extends PaginationOptions {
-  userDefinedComponents: UserDefinedComponents;
+interface JsonFeedHandlerOptions extends Omit<PaginationOptions, "decodeUrl"> {
+  shortcodeComponents: ShortcodeComponents;
 }
 
-const jsonFeedHandlerOptionsDefaults = {
+const jsonFeedHandlerOptionsDefaults: JsonFeedHandlerOptions = {
   perPage: 10,
   encodeUrl: (page: number) => `${config.posts.feedUrl}?page=${page}`,
-  userDefinedComponents: {},
+  shortcodeComponents: {},
 };
 
 export const JsonFeedHandler = (
@@ -27,7 +27,7 @@ export const JsonFeedHandler = (
   return async (req) => {
     const { posts, pagination } = await getBlogList(req.url);
 
-    const Md = CreateMd(_options.userDefinedComponents);
+    const Md = CreateMd({ shortcodeComponents: _options.shortcodeComponents });
 
     // TODO: content_html: preact render to string; remove whitespace and escape
     // line endings (JSON.stringify may do that automatically?)
@@ -50,7 +50,6 @@ export const JsonFeedHandler = (
             ? renderToString(
               <Md
                 node={post.content}
-                userDefinedComponents={_options.userDefinedComponents}
               />,
             )
             : null,
