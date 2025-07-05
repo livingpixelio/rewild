@@ -17,10 +17,12 @@ const preloaders: Preloader[] = [
 const preloadAssember = PreloadAssembler(preloaders);
 
 export const assemblePreloads = async (
+  request: Request,
+  context: FreshContext,
   content: MdastNodeTy.Root,
 ): Promise<PreloadFulfilled[]> => {
   const preloads = preloadAssember.preloadsForNodes(content, true);
-  const all = await runPreloads(preloads);
+  const all = await runPreloads(preloads)(request, context);
 
   const errors = all.filter((preload) => preload.preloadStatus === "error");
   if (errors.length) {

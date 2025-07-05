@@ -1,9 +1,13 @@
+import { FreshContext } from "$fresh/server.ts";
 import { HttpError } from "../errors.ts";
 import { MdastNodeTy } from "../parsers/index.ts";
 
 export interface PreloadPending {
   key: string;
-  query: () => Promise<MdastNodeTy.MdastNode>;
+  query: (
+    request: Request,
+    context: FreshContext,
+  ) => Promise<MdastNodeTy.MdastNode>;
 }
 
 export interface PreloadFulfilled {

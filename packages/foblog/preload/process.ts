@@ -1,7 +1,6 @@
 import { FreshContext } from "$fresh/server.ts";
 import { isLeaf } from "../parsers/index.ts";
 import { MdastNodeTy } from "../parsers/markdown/index.ts";
-import { ResourceFinder } from "../plugin/build.ts";
 import {
   Preloader,
   PreloadErrored,
@@ -50,10 +49,14 @@ export const PreloadAssembler = (preloaders: Preloader[]) => {
   };
 };
 
-export const runPreloads = async (
+export const runPreloads = (
   preloads: PreloadPending[],
+) =>
+(
+  request: Request,
+  context: FreshContext,
 ): Promise<Array<PreloadFulfilled | PreloadErrored>> => {
-  const promises = preloads.map((preload) => preload.query());
+  const promises = preloads.map((preload) => preload.query(request, context));
 
   return Promise.allSettled(promises).then((settled) => {
     return settled.map((promise, idx) =>
