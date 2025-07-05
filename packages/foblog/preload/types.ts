@@ -1,27 +1,27 @@
 import { FreshContext } from "../deps.ts";
 import { HttpError } from "../errors.ts";
-import { MdastNode } from "../parsers/markdown/MdastNode.ts";
-import { Ls } from "../storage/disk.ts";
+import { MdastNodeTy } from "../parsers/index.ts";
+import { Resource } from "../storage/disk.ts";
 
-export interface PreloadPending<NodeTy extends MdastNode> {
+export interface PreloadPending {
   key: string;
   query: (
     request: Request,
     context: FreshContext,
-    getLs: () => Ls,
-  ) => Promise<NodeTy> | null;
+    findResourcesForFile: (filename: string, extension?: string) => Resource[],
+  ) => Promise<MdastNodeTy.MdastNode>;
 }
 
-export interface PreloadFulfilled<NodeTy extends MdastNode>
-  extends PreloadPending<NodeTy> {
-  data: NodeTy;
+export interface PreloadFulfilled {
+  key: string;
+  data: MdastNodeTy.MdastNode;
 }
 
-export interface PreloadErrored<NodeTy extends MdastNode>
-  extends PreloadPending<NodeTy> {
+export interface PreloadErrored {
+  key: string;
   error: Error | HttpError | unknown;
 }
 
-export type Preloader = <NodeTy extends MdastNode>(
-  node: NodeTy,
-) => PreloadPending<NodeTy>;
+export type Preloader = (
+  node: MdastNodeTy.MdastNode,
+) => PreloadPending | Array<PreloadPending> | null;
