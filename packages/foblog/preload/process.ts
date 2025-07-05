@@ -32,7 +32,7 @@ export const PreloadAssembler = (preloaders: Preloader[]) => {
 
   const transformNode = <NodeTy extends MdastNodeTy.MdastNode>(
     node: NodeTy,
-    fulfilled: PreloadFulfilled[],
+    fulfilled: Array<PreloadFulfilled>,
   ) => {
     return preloadsForNodes(node, false).reduce((node, preload) => {
       const key = preload.key;
@@ -50,24 +50,24 @@ export const PreloadAssembler = (preloaders: Preloader[]) => {
   };
 };
 
-export const runPreloads = (
+export const runPreloads = async (
   preloads: PreloadPending[],
-) =>
-async (
-  request: Request,
-  context: FreshContext,
 ): Promise<Array<PreloadFulfilled | PreloadErrored>> => {
-  const findResourcesForFile = await ResourceFinder();
-
-  const promises = preloads.map((preload) =>
-    preload.query(request, context, findResourcesForFile)
-  );
+  const promises = preloads.map((preload) => preload.query());
 
   return Promise.allSettled(promises).then((settled) => {
     return settled.map((promise, idx) =>
       promise.status === "fulfilled"
-        ? { key: preloads[idx].key, data: promise.value }
-        : { key: preloads[idx].key, error: promise.reason }
+        ? {
+          key: preloads[idx].key,
+          preloadStatus: "fulfilled",
+          data: promise.value,
+        }
+        : {
+          key: preloads[idx].key,
+          preloadStatus: "error",
+          error: promise.reason,
+        }
     );
   });
 };
