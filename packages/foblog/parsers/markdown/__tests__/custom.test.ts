@@ -21,6 +21,24 @@ Deno.test("parse XLinks", () => {
   assertEquals(parseCustom(input), expected);
 });
 
+Deno.test("parse XLinks: implicit child text", () => {
+  const input =
+    "This hobbit was a very [[well-to-do]] hobbit, and his name was Baggins.";
+  const expected: MdastNode[] = [
+    { type: "text", value: "This hobbit was a very " },
+    {
+      type: "xlink",
+      filename: "well-to-do",
+      children: [
+        { type: "text", value: "well-to-do" },
+      ],
+    },
+    { type: "text", value: " hobbit, and his name was Baggins." },
+  ];
+
+  assertEquals(parseCustom(input), expected);
+});
+
 Deno.test("parse Attachments", () => {
   const input =
     "This hobbit was a very well-to-do hobbit, ![[bilbo.png|Bilbo Baggins in his hole]] and his name was Baggins.";

@@ -1,7 +1,7 @@
 import { Preloader } from "./types.ts";
 import { config } from "../plugin/config.ts";
-import { ResourceFinder } from "../plugin/build.ts";
 import { getImage } from "../lib/index.ts";
+import { ResourceFinder } from "./ResourceFinder.ts";
 
 export const preloadXLinks: Preloader = (node) => {
   if (node.type !== "xlink") return null;
@@ -41,9 +41,10 @@ export const preloadAttachmentImages: Preloader = (node) => {
     query: async () => {
       const findResources = await ResourceFinder();
 
-      const resource = findResources(imageNode.filename).find((resource) => {
-        return resource.type === "image";
-      });
+      const resource = findResources(imageNode.filename, imageNode.extension)
+        .find((resource) => {
+          return resource.type === "image";
+        });
       if (!resource) {
         throw new Error("NotFound");
       }

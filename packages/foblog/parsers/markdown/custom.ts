@@ -73,11 +73,9 @@ export const parseCustom = (
     const node: XLink = {
       type: "xlink",
       filename: nodeParts[0],
-      children: nodeParts[1]
-        ? [
-          { type: "text", value: nodeParts[1] },
-        ]
-        : [],
+      children: [
+        { type: "text", value: nodeParts[1] || nodeParts[0] },
+      ],
     };
     return reparse([
       { type: "text", value: xlink[0] },

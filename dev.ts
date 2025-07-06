@@ -3,14 +3,14 @@
 import dev from "$fresh/dev.ts";
 import config from "./fresh.config.ts";
 import "$std/dotenv/load.ts";
-// import { contentBuilder } from "foblog";
+import { contentBuilder } from "foblog";
 
-// if (!Deno.args.includes("build")) {
-//   await contentBuilder.build();
-//   contentBuilder.watch((digest, watcher) => {
-//     Deno.writeTextFile("digest.txt", digest);
-//     watcher.close();
-//   });
-// }
+if (!Deno.args.includes("build")) {
+  await contentBuilder.build();
+  contentBuilder.watch((digest, watcher) => {
+    Deno.writeTextFile("digest.txt", digest);
+    watcher.close();
+  });
+}
 
 await dev(import.meta.url, "./main.ts", config);

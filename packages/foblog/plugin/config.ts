@@ -46,7 +46,7 @@ const DEFAULT_CONFIG: PluginConfig = {
   },
 
   pages: {
-    permalink: (path) => path,
+    permalink: (path) => `/${path}`,
   },
 
   images: {

@@ -1,27 +1,17 @@
-import { Handler, PageProps } from "$fresh/server.ts";
-import type { PostTy } from "foblog";
-import { CreateMd, getPost, Icon } from "foblog";
+import { PageProps } from "$fresh/server.ts";
+import type { PostHandlerProps } from "foblog";
+import { CreateMd, Icon, PostHandler } from "foblog";
 
 import { ArrowLeft } from "../../components/icons.tsx";
 import { postDate } from "../../lib/datetime.ts";
 import { Wrapper } from "../../components/Wrapper.tsx";
 import { BannerImage } from "../../islands/BannerImage.tsx";
 
-interface Props {
-  post: PostTy;
-}
-
-export const handler: Handler<Props> = async (_req, ctx) => {
-  const post = await getPost(ctx.params.slug);
-  if (!post) {
-    return ctx.renderNotFound();
-  }
-  return ctx.render({ post });
-};
+export const handler = PostHandler();
 
 const Md = CreateMd();
 
-export default function PostPage({ url, data }: PageProps<Props>) {
+export default function PostPage({ url, data }: PageProps<PostHandlerProps>) {
   const { post } = data;
 
   return (
@@ -53,7 +43,7 @@ export default function PostPage({ url, data }: PageProps<Props>) {
         <hr className="my-4" />
 
         <div className="content">
-          <Md node={post.content} />
+          <Md node={post.content} preloads={data.preloads} />
         </div>
 
         <hr className="my-4" />

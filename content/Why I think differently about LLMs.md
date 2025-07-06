@@ -4,14 +4,14 @@ slug:
 date_published: 
 date_modified: 
 image: 
-banner_image: "![[scerevisiae.png]]"
+banner_image: 
 external_url: 
 tags: 
 attachments:
 ---
 When I was in grad school I studied a protein called Fus2p. Fus2p exists in baker's yeast: the yeast responsible for making bread, beer, and for a surprising amount of our knowledge about how cells work. It is not related (in an obvious way) to any protein that exists in humans and it participates in the biological process of fusing two yeast cells together. This process is called "mating" but it probably isn't related (by evolution) to the fusion of mammalian gametes.
 
-![[neurons.jpg|This is alt text]]> This is alt text
+![[neurons.jpg|This is alt text]]
 
 - with DATA
 - another list

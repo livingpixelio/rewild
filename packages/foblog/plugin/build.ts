@@ -6,7 +6,7 @@ import {
   findPrevEntry,
   Ls,
   LsEntry,
-  LsModel,
+  LsRepository,
   openFile,
   Resource,
   resourcesToDelete,
@@ -14,8 +14,6 @@ import {
 import { path } from "../deps.ts";
 import { config } from "./config.ts";
 import { log } from "../log.ts";
-
-const LsRepository = Repository(LsModel);
 
 export const ContentBuilder = (...models: AnyModel[]) => {
   const runModels = (
@@ -181,16 +179,3 @@ export const handleBuildError =
   };
 
 export const contentBuilder = ContentBuilder(post, page, image);
-
-export const ResourceFinder = async () => {
-  const prevLs = await LsRepository.get("ls");
-  if (!prevLs) {
-    throw new Error("System build not completed");
-  }
-  const compareEntries = findPrevEntry(prevLs);
-
-  return (basename: string, extension?: string) => {
-    const entry = compareEntries(basename, extension || ".md");
-    return entry?.resources || [];
-  };
-};

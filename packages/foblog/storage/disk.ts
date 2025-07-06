@@ -3,6 +3,7 @@ import { Model } from "../lib/model/Model.ts";
 import { config } from "../plugin/config.ts";
 import { exists } from "$std/fs/exists.ts";
 import { slugifyAsPath } from "../parsers/index.ts";
+import { Repository } from "./db.ts";
 
 const CONTENT_DIR = path.join(Deno.cwd(), config.contentDir);
 const IGNORE_DIR = ["templates", ".obsidian"];
@@ -33,6 +34,8 @@ export const LsModel: Model<Ls> = {
   name: "ls",
   schema: LsSchema,
 };
+
+export const LsRepository = Repository(LsModel);
 
 export const getChecksum = async (data: Uint8Array): Promise<string> => {
   const digest = await crypto.subtle.digest("SHA-256", data);
