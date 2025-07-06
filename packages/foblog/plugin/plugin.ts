@@ -1,7 +1,5 @@
 /// <reference lib="deno.unstable" />
 
-// import { path } from "../deps.ts";
-
 import { Plugin } from "$fresh/server.ts";
 import { log } from "../log.ts";
 import { clearDb, startDb } from "../storage/db.ts";

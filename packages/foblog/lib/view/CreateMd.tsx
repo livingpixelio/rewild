@@ -11,6 +11,13 @@ import highlightCode from "../../parsers/markdown/Prism.ts";
 import type { FunctionComponent } from "../../deps.ts";
 import type * as Mdast from "../../parsers/markdown/MdastNode.ts";
 
+import {
+  preloadAssembler as defaultPreloadAssembler,
+  PreloadAssemblerTy,
+} from "../../preload/index.ts";
+import { PreloadFulfilled } from "../../preload/types.ts";
+import { ImgLazyResponsive } from "./ImgLazyResponsive.tsx";
+
 // We use "any" here for props, because we do not know the type of the
 // components which are added by the user
 export type ShortcodeComponents = Record<
@@ -20,19 +27,23 @@ export type ShortcodeComponents = Record<
 
 interface CreateMdOptions {
   shortcodeComponents: ShortcodeComponents;
+  preloadAssembler: PreloadAssemblerTy;
+  imageSizes?: string;
 }
 
 export const CreateMd = (
   options?: Partial<CreateMdOptions>,
 ) => {
-  const { shortcodeComponents } = {
+  const { shortcodeComponents, preloadAssembler, imageSizes } = {
     shortcodeComponents: {},
+    preloadAssembler: defaultPreloadAssembler,
     ...options,
   };
 
   const MdComponent: FunctionComponent<{
     node?: Mdast.MdastNode;
-  }> = ({ node }) => {
+    preloads: PreloadFulfilled[];
+  }> = ({ node, preloads }) => {
     if (!node) return null;
 
     if (node.type === "text") {
@@ -50,6 +61,7 @@ export const CreateMd = (
       return (
         <MdComponent
           node={node.children[0]}
+          preloads={preloads}
         />
       );
     }
@@ -59,6 +71,7 @@ export const CreateMd = (
       : node.children.map((node) => (
         <MdComponent
           node={node}
+          preloads={preloads}
         />
       ));
 
@@ -85,6 +98,11 @@ export const CreateMd = (
         return <a href={node.url}>{childNodes}</a>;
       }
 
+      case "xlink": {
+        const trNode = preloadAssembler.transform(node, preloads);
+        return <a href={trNode.url}>{childNodes}</a>;
+      }
+
       case "code": {
         return (
           <pre data-lang={node.lang} className={`language-${node.lang}`}>
@@ -100,7 +118,7 @@ export const CreateMd = (
       }
 
       case "list": {
-        return <MdList node={node} />;
+        return <MdList node={node} preloads={preloads} />;
       }
 
       case "blockquote": {
@@ -123,12 +141,24 @@ export const CreateMd = (
         return <img src={node.url} alt={node.alt} />;
       }
 
+      case "attachment": {
+        const trNode = preloadAssembler.transform(node, preloads);
+        return (
+          <ImgLazyResponsive
+            image={trNode.image || null}
+            alt={trNode.alt || ""}
+            sizes={imageSizes}
+          />
+        );
+      }
+
       case "shortcode": {
         const Component = shortcodeComponents[node.name];
         if (!node.name || !Component) {
           return null;
         }
-        return <Component {...node} />;
+        const trNode = preloadAssembler.transform(node, preloads);
+        return <Component {...trNode} />;
       }
     }
 
@@ -154,11 +184,13 @@ export const CreateMd = (
 
   const MdList: FunctionComponent<{
     node: Mdast.List;
-  }> = ({ node }) => {
+    preloads: PreloadFulfilled[];
+  }> = ({ node, preloads }) => {
     const children = node.children.map((child) => (
       <li>
         <MdComponent
           node={child}
+          preloads={preloads}
         />
       </li>
     ));
@@ -166,8 +198,10 @@ export const CreateMd = (
     return node.ordered ? <ol>{children}</ol> : <ul>{children}</ul>;
   };
 
-  const Md: FunctionComponent<{ node?: Mdast.Root }> = ({ node }) => {
-    return <MdComponent node={node} />;
+  const Md: FunctionComponent<
+    { node?: Mdast.Root; preloads?: PreloadFulfilled[] }
+  > = ({ node, preloads }) => {
+    return <MdComponent node={node} preloads={preloads || []} />;
   };
 
   return Md;

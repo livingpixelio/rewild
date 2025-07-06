@@ -1,4 +1,4 @@
-import { AnyModel, ReadData } from "../lib/model/Model.ts";
+import type { AnyModel, ReadData } from "../lib/model/Model.ts";
 import { image, page, post } from "../lib/index.ts";
 import { Repository } from "../storage/db.ts";
 import {

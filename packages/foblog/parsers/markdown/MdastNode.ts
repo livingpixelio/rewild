@@ -1,3 +1,5 @@
+import { ImageTy } from "../../lib/index.ts";
+
 /**
  * Root
  */
@@ -123,6 +125,7 @@ export interface Attachment {
   extension: string;
   alt?: string;
   url?: string;
+  image?: ImageTy;
 }
 
 export type Inline =

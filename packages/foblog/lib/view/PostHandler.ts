@@ -1,43 +1,43 @@
-import { FreshContext, Handler } from "../../deps.ts";
+import { FreshContext, Handler } from "$fresh/server.ts";
 import { preloadAssembler } from "../../preload/index.ts";
 import { PreloadFulfilled } from "../../preload/types.ts";
-import { getPage, PageTy } from "../index.ts";
+import { getPost, PostTy } from "../index.ts";
 
-interface PageHandlerOptions {
+interface PostHandlerOptions {
   decodeUrl: (url: string | URL, context: FreshContext) => string;
 }
 
-const defaultPageHandlerOptions: PageHandlerOptions = {
+const defaultPostHandlerOptions: PostHandlerOptions = {
   decodeUrl(_url, context) {
     const slug = context.params.slug;
     return slug;
   },
 };
 
-export interface PageHandlerProps {
-  page: PageTy;
+export interface PostHandlerProps {
+  post: PostTy;
   preloads: PreloadFulfilled[];
 }
 
-export const PageHandler = (
-  options?: Partial<PageHandlerOptions>,
-): Handler<PageHandlerProps> => {
-  const { decodeUrl } = { ...defaultPageHandlerOptions, ...options };
+export const PostHandler = (
+  options?: Partial<PostHandlerOptions>,
+): Handler<PostHandlerProps> => {
+  const { decodeUrl } = { ...defaultPostHandlerOptions, ...options };
 
   return async (request, context) => {
     const slug = decodeUrl(request.url, context);
 
-    const page = await getPage(slug);
-    if (!page) {
+    const post = await getPost(slug);
+    if (!post) {
       return context.renderNotFound();
     }
 
     const preloads = await preloadAssembler.assemble(
       request,
       context,
-      page.content,
+      post.content,
     );
 
-    return context.render({ page, preloads });
+    return context.render({ post, preloads });
   };
 };
