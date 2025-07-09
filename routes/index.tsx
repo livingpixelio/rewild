@@ -1,6 +1,6 @@
 import { BlogList, FobHead, Icon } from "foblog";
 import { PageProps } from "$fresh/server.ts";
-import { ArrowRight } from "../components/icons.tsx";
+import { LuArrowRight as ArrowRight } from "jsr:@preact-icons/lu";
 import Hero from "../islands/Hero.tsx";
 import { postDate } from "../lib/datetime.ts";
 

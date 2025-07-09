@@ -3,10 +3,10 @@ import {
   ChevronLast,
   ChevronLeft,
   ChevronRight,
-} from "https://esm.sh/lucide-preact@0.299.0/?exports=ChevronFirst,ChevronLeft,ChevronRight,ChevronLast";
-import { Icon } from "./Icon.tsx";
+  Icon,
+} from "./Icon.tsx";
 import { classNames as cn } from "./formatters.ts";
-import type { FunctionComponent } from "../../deps.ts";
+import type { FunctionComponent } from "preact";
 import { Pagination } from "../model/index.ts";
 
 export interface PaginatorProps extends Pagination {

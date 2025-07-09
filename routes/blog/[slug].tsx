@@ -2,7 +2,7 @@ import { PageProps } from "$fresh/server.ts";
 import type { PostHandlerProps } from "foblog";
 import { CreateMd, Icon, PostHandler } from "foblog";
 
-import { ArrowLeft } from "../../components/icons.tsx";
+import { LuArrowLeft as ArrowLeft } from "jsr:@preact-icons/lu";
 import { postDate } from "../../lib/datetime.ts";
 import { Wrapper } from "../../components/Wrapper.tsx";
 import { BannerImage } from "../../islands/BannerImage.tsx";

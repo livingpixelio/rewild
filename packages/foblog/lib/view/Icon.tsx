@@ -1,10 +1,9 @@
 import { classNames as cn } from "./formatters.ts";
 import type { FunctionComponent } from "../../deps.ts";
+import type { IconBaseProps } from "jsr:@preact-icons/common@^1.0.12";
 
 export interface IconProps {
-  // can't find Lucide types anywhere
-  // deno-lint-ignore no-explicit-any
-  icon: FunctionComponent<any>;
+  icon: FunctionComponent<IconBaseProps>;
   size?: number;
   className: string;
   color?: string;
@@ -22,8 +21,12 @@ export const Icon: FunctionComponent<IconProps> = (props) => {
         height={props.size || "1em"}
         color={props.color}
         strokeWidth={props.strokeWidth}
-        absoluteStrokeWidth={props.absoluteStrokeWidth}
       />
     </div>
   );
 };
+
+export { LuChevronFirst as ChevronFirst } from "jsr:@preact-icons/lu";
+export { LuChevronLast as ChevronLast } from "jsr:@preact-icons/lu";
+export { LuChevronLeft as ChevronLeft } from "jsr:@preact-icons/lu";
+export { LuChevronRight as ChevronRight } from "jsr:@preact-icons/lu";

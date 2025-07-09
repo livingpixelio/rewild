@@ -10,11 +10,8 @@ export type {
 export { Head } from "https://deno.land/x/fresh@1.7.3/runtime.ts";
 
 // preact
-export type {
-  ComponentChildren,
-  FunctionComponent,
-} from "https://esm.sh/preact@10.20.1";
-export { Fragment } from "https://esm.sh/preact@10.20.1";
+export type { ComponentChildren, FunctionComponent } from "preact";
+export { Fragment } from "preact";
 export { default as renderToString } from "https://esm.sh/v135/preact-render-to-string@6.3.1/X-ZS8q/src/index.js";
 
 // ZOD
