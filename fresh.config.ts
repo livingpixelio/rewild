@@ -8,9 +8,9 @@ export default defineConfig({
     foblog((config) => ({
       ...config,
 
-      siteTitle: "OptOut",
-      siteDescription: "A experiment in rewilding the internet",
-      siteUrl: "https://optout.social",
+      siteTitle: "Rewild",
+      siteDescription: "Tech that serves humans, not the other way around",
+      siteUrl: "https://letsrewildthe.net",
       siteMainAuthor: {
         name: "Casey A. Ydenberg",
       },

@@ -15,10 +15,10 @@ export default async function Home({ url }: PageProps) {
       <Hero>
         <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
           <h1 class="text-4xl font-bold text-success">
-            OptOut
+            Rewild
           </h1>
           <p class="my-4">
-            An experiment in rewilding the internet.
+            Tech that serves humans
           </p>
           <p class="mt-4">
             <a class="text-xl underline mr-8" href="/about">About</a>

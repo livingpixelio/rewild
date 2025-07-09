@@ -6,10 +6,10 @@ import { FeatureList } from "../islands/FeatureList.tsx";
 
 const WfPage: FunctionComponent<PageProps> = ({ url }) => {
   return (
-    <Wrapper url={url} pageTitle="About WordFresh">
+    <Wrapper url={url} pageTitle="About Foblog">
       <article class="py-10">
         <div class="container max-w-3xl mx-auto">
-          <h1 class="text-3xl text-info font-bold my-4">About WordFresh</h1>
+          <h1 class="text-3xl text-info font-bold my-4">About Foblog</h1>
           <p class="my-4">
             The web has always been a social network unto itself - a distributed
             network of independently owned sites connected by hyperlinks. The
@@ -61,29 +61,30 @@ const WfPage: FunctionComponent<PageProps> = ({ url }) => {
           </p>
           <p class="my-4">
             What I had to add to Fresh (as a plugin) was all the stuff necessary
-            for blogging. Posts are authored in markdown, custom post types as
-            Zod definitions, JSONFeed is provided as a Fresh handler, images are
-            resized (automatically) with ImageMagick. Fresh (and Deno, the
-            JavaScript runtime that powers it) turn out to be wonderful places
-            to experiment with all of this stuff, and developing was fairly
-            straightforward and did not result in the bloat or unnecessary
-            complexity we've come to accept from other authoring environments.
+            for blogging. Posts and pages are authored in markdown, custom post
+            types as Zod definitions, JSONFeed is provided as a Fresh handler,
+            images are resized (automatically) with ImageMagick. Fresh (and
+            Deno, the JavaScript runtime that powers it) turn out to be
+            wonderful places to experiment with all of this stuff, and
+            developing was fairly straightforward and did not result in the
+            bloat or unnecessary complexity we've come to accept from other
+            authoring environments.
           </p>
           <p class="my-4">
-            WordFresh is not a "content management system." There's no WYSIWYG
-            editor and you have to write (some) code to do it at this point. In
-            this sense, it is more like Gatsby than WordPress. I strongly
-            believe that the web is for everyone, but the code-driven foundation
-            has to come before the CMS castle. WordFresh is fully open source,
-            and a CMS can be always be put on top of it if anyone wants to get
-            involved.
+            Foblog is not a "content management system." I use Obsidian to
+            author posts, and you have to write (some) code to do it at this
+            point. In this sense, it is more like Gatsby than WordPress. I
+            strongly believe that the web is for everyone, but the code-driven
+            foundation has to come before the CMS castle. Foblog is fully open
+            source, and a CMS can be always be put on top of it if anyone wants
+            to get involved.
           </p>
           <p class="my-4">
             I will talk about further improvements to the system in the{" "}
             <a class="text-info font-bold" href="/blog">blog</a>. You can also
             have a look at the{" "}
             <a
-              href="https://github.com/CAYdenberg/wordfresh"
+              href="https://github.com/livingpixelio/foblog"
               class="text-info font-bold"
             >
               GitHub repo
