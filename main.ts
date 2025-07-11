@@ -10,9 +10,11 @@ import { start } from "$fresh/server.ts";
 import manifest from "./fresh.gen.ts";
 import config from "./fresh.config.ts";
 import { contentBuilder } from "foblog";
-import { clearDb } from "./packages/foblog/storage/db.ts";
+import { clearDb, startDb } from "./packages/foblog/storage/db.ts";
 
 // temporary: need to refactor ContentBuilder
+startDb(await Deno.openKv());
+
 await clearDb();
 await contentBuilder.build();
 
