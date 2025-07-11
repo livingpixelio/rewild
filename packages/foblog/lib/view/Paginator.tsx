@@ -4,7 +4,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Icon,
-} from "./Icon.tsx";
+} from "./icons.tsx";
 import { classNames as cn } from "./formatters.ts";
 import type { FunctionComponent } from "preact";
 import { Pagination } from "../model/index.ts";
@@ -24,48 +24,20 @@ export const Paginator: FunctionComponent<PaginatorProps> = (
   return (
     <div className={cn(className?.root, "wf-paginator")}>
       <a href={url.first || undefined}>
-        <Icon
-          icon={ChevronFirst}
-          className={cn(
-            className?.button,
-            url.first ? null : className?.disabledButton,
-            "wf-paginator__button",
-          )}
-        />
+        <Icon icon={ChevronFirst} />
       </a>
       <a href={url.prev || undefined}>
-        <Icon
-          icon={ChevronLeft}
-          className={cn(
-            className?.button,
-            url.prev ? null : className?.disabledButton,
-            "wf-paginator__button",
-          )}
-        />
+        <Icon icon={ChevronLeft} />
       </a>
       <p className={cn(className?.text, "wf-paginator__text")}>
         <span>Showing items</span> <span>{summary.from}—{summary.to}</span>
         {summary.of ? <span>{` `} of {summary.of}.</span> : <span>.</span>}
       </p>
       <a href={url.next || undefined}>
-        <Icon
-          icon={ChevronRight}
-          className={cn(
-            className?.button,
-            url.next ? null : className?.disabledButton,
-            "wf-paginator__button",
-          )}
-        />
+        <Icon icon={ChevronRight} />
       </a>
       <a href={url.last || undefined}>
-        <Icon
-          icon={ChevronLast}
-          className={cn(
-            className?.button,
-            url.last ? null : className?.disabledButton,
-            "wf-paginator__button",
-          )}
-        />
+        <Icon icon={ChevronLast} />
       </a>
     </div>
   );
