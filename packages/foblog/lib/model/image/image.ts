@@ -97,7 +97,7 @@ export const image: Model<ImageTy> = {
     const data = await generateImageSizes(
       file.data,
       config.images.sizes,
-      config.freshConfig ? emitSize : undefined,
+      emitSize,
     );
 
     return {

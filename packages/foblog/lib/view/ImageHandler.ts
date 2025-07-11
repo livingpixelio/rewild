@@ -7,7 +7,6 @@ import { parseQuery } from "../../parsers/index.ts";
 import { Repository } from "../../storage/db.ts";
 import { getAttachmentPath, getContentPath } from "../../storage/disk.ts";
 import { image } from "../model/index.ts";
-import { config } from "../../plugin/config.ts";
 
 interface ImageParams {
   slug: string;
@@ -61,15 +60,13 @@ export const ImageHandler = (
       return new HttpError(404).toHttp();
     }
 
-    const getFilename = (size: number) =>
-      `${imageData.slug}_${size}${imageData.format}`;
-    const sizes = config.images.sizes.slice().sort((a, b) => a - b);
+    const sizes = imageData.sizes.slice().sort((a, b) => a.size - b.size);
     const size = typeof params.width === "number"
-      ? sizes.find((size) => size >= (params.width as number))
+      ? sizes.find((size) => size.size >= (params.width as number))
       : null;
 
     const attachmentPath = size
-      ? getAttachmentPath(getFilename(size), context)
+      ? getAttachmentPath(size?.filename, context)
       : null;
 
     if (attachmentPath && await exists(attachmentPath)) {
