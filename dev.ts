@@ -5,6 +5,8 @@ import config from "./fresh.config.ts";
 import "$std/dotenv/load.ts";
 import { contentBuilder } from "foblog";
 
+// @TODO: the awkwardness of this could be avoided by running from a middleware
+// that is specified by the plugin rather than from a .
 if (!Deno.args.includes("build")) {
   await contentBuilder.build();
   contentBuilder.watch((digest, watcher) => {
