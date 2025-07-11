@@ -10,7 +10,10 @@ import { start } from "$fresh/server.ts";
 import manifest from "./fresh.gen.ts";
 import config from "./fresh.config.ts";
 import { contentBuilder } from "foblog";
+import { clearDb } from "./packages/foblog/storage/db.ts";
 
+// temporary: need to refactor ContentBuilder
+await clearDb();
 await contentBuilder.build();
 
 await start(manifest, config);
