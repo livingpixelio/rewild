@@ -1,12 +1,14 @@
 import { PageProps } from "$fresh/server.ts";
-import { BlogList } from "foblog";
+import { BlogListHandler, type BlogListHandlerProps } from "foblog";
 import { Wrapper } from "../../components/Wrapper.tsx";
 import { Paginator } from "foblog";
 
-const getBlogList = BlogList();
+export const handler = BlogListHandler();
 
-export default async function BlogPage({ url }: PageProps) {
-  const { posts, pagination } = await getBlogList(url);
+export default function BlogPage(
+  { url, data }: PageProps<BlogListHandlerProps>,
+) {
+  const { posts, pagination } = data;
 
   return (
     <Wrapper url={url} pageTitle="Blog">

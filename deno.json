@@ -30,7 +30,7 @@
     "ptera": "https://deno.land/x/ptera@v1.0.2/mod.ts",
     "ptera/": "https://deno.land/x/ptera@v1.0.2/",
     "assert/": "https://deno.land/std@0.221.0/assert/",
-    "foblog": "./packages/foblog/mod.ts"
+    "foblog": "https://deno.land/x/foblog@0.0.3"
   },
   "compilerOptions": {
     "jsx": "react-jsx",

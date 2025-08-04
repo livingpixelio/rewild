@@ -1,3 +1,0 @@
-remove:/home/caydenberg/code/optout/content/cron (2).csv
-
-whatever

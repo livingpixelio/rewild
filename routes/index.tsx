@@ -1,13 +1,18 @@
-import { BlogList, FobHead, Icon } from "foblog";
+import {
+  BlogListHandler,
+  type BlogListHandlerProps,
+  FobHead,
+  Icon,
+} from "foblog";
 import { PageProps } from "$fresh/server.ts";
 import Hero from "../islands/Hero.tsx";
 import { postDate } from "../lib/datetime.ts";
 import { ArrowRight } from "../components/icons.tsx";
 
-const getBlogList = BlogList();
+export const handler = BlogListHandler({ perPage: 5 });
 
-export default async function Home({ url }: PageProps) {
-  const { posts } = await getBlogList();
+export default function Home({ url, data }: PageProps<BlogListHandlerProps>) {
+  const { posts } = data;
 
   return (
     <>
