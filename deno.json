@@ -4,10 +4,9 @@
     "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
     "cli": "echo \"import '\\$fresh/src/dev/cli.ts'\" | deno run --unstable -A -",
     "manifest": "deno task cli manifest $(pwd)",
-    "start": "deno run -A --unstable-kv --watch=static/,routes/,digest.txt dev.ts",
-    "build": "deno run -A --unstable-kv dev.ts build",
-    "preview": "deno run -A --unstable-kv main.ts",
-    "clearDb": "deno run -A --unstable-kv clearDb.ts",
+    "start": "deno run -A  --watch=static/,routes/,digest.txt dev.ts",
+    "build": "deno run -A  dev.ts build",
+    "preview": "deno run -A main.ts",
     "update": "deno run -A -r https://fresh.deno.dev/update .",
     "test": "deno test -A"
   },
@@ -30,7 +29,7 @@
     "ptera": "https://deno.land/x/ptera@v1.0.2/mod.ts",
     "ptera/": "https://deno.land/x/ptera@v1.0.2/",
     "assert/": "https://deno.land/std@0.221.0/assert/",
-    "foblog": "https://deno.land/x/foblog@0.0.3/mod.ts"
+    "foblog": "https://deno.land/x/foblog@0.0.4/mod.ts"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
