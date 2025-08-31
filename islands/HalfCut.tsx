@@ -1,24 +1,22 @@
 import { FunctionComponent } from "preact";
-import { ImageTy, ImgLazy } from "foblog";
+import { ImgLazy } from "foblog";
 
 interface Props {
-  image: ImageTy | null;
+  slug: string;
   alt: string;
   reverse?: boolean;
 }
 
 export const HalfCut: FunctionComponent<Props> = (
-  { image, alt, reverse, children },
+  { slug, alt, reverse, children },
 ) => {
-  if (!image) return null;
-
   return (
     <div
       class={`sm:flex flex-row items-stretch ${reverse && "flex-row-reverse"}`}
     >
       <div class="sm:w-[50%] bg-dark flex-shrink-0 flex-grow-1">
         <ImgLazy
-          src={`/image/${image.slug}`}
+          src={`/image/${slug}`}
           alt={alt}
           className="object-cover w-full h-[150px] sm:h-full"
         />
