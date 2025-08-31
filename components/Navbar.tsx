@@ -5,7 +5,7 @@ export default function Navbar() {
         <ul className="flex flex-row items-center h-16 gap-4">
           <li>
             <a href="/" className="font-bold text-primary">
-              OptOut.social
+              Rewild
             </a>
           </li>
         </ul>
@@ -13,9 +13,6 @@ export default function Navbar() {
         <ul className="flex flex-row items-center h-16 gap-4">
           <li>
             <a href="/about">About</a>
-          </li>
-          <li>
-            <a href="/wf">Tech</a>
           </li>
           <li>
             <a href="/blog">Blog</a>

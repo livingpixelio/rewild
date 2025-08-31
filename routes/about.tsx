@@ -3,15 +3,12 @@ import { Wrapper } from "../components/Wrapper.tsx";
 import { HalfCut } from "../islands/HalfCut.tsx";
 import { Shrooms } from "../islands/Shrooms.tsx";
 import { EmDash } from "../components/chars.tsx";
-import { getImage } from "foblog";
 
-export default async function About({ url }: PageProps) {
-  const image = await getImage("forest1");
-
+export default function About({ url }: PageProps) {
   return (
     <Wrapper url={url} pageTitle="About">
       <header>
-        <HalfCut image={image} alt="A lush forest">
+        <HalfCut slug="forest1" alt="A lush forest">
           <blockquote>
             The troubles that have plagued “scientific” forestry, invented in
             the German lands in the late eighteenth century, and some forms of

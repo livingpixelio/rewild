@@ -26,8 +26,7 @@ export default function Home({ url, data }: PageProps<BlogListHandlerProps>) {
             Tech that serves humans
           </p>
           <p class="mt-4">
-            <a class="text-xl underline mr-8" href="/about">About</a>
-            <a class="text-xl underline" href="/wf">How it works</a>
+            <a class="text-xl underline" href="/about">About</a>
           </p>
         </div>
       </Hero>
