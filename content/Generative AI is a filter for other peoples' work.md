@@ -4,7 +4,7 @@ slug:
 date_published: 2025-08-30
 date_modified:
 image:
-banner_image: "![[neurons.jpg]]"
+banner_image:
 external_url:
 tags:
 attachments:
