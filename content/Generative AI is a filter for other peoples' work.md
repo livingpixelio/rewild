@@ -1,7 +1,12 @@
 ---
 type: Post
+<<<<<<< HEAD
 slug:
 date_published: 2025-08-30
+=======
+slug: all-your-ai-is-belong-to-us
+date_published: 2025-08-31
+>>>>>>> d1961a9 (Bullshit jobs)
 date_modified:
 image:
 banner_image:

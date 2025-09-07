@@ -1,7 +1,7 @@
 ---
 type: Post
-slug:
-date_published: 2025-09-04
+slug: will-ai-bs
+date_published: 2025-09-06
 date_modified:
 image: "![[Punishment_sisyph.jpg]]"
 banner_image:
