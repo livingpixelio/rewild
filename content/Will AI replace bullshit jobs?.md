@@ -9,7 +9,8 @@ external_url: https://isbnsearch.org/isbn/9781501143335
 tags:
 attachments:
 ---
-I just finished David Graeber's 2018 book "Bullshit Jobs", based on his 2013 essay [On the Phenomenon of Bullshit Jobs](https://davidgraeber.org/articles/on-the-phenomenon-of-bullshit-jobs-a-work-rant/). The essay at the time apparently caused a bit of a sensation, including an attempted rebuttal from *The Economist,* and several polls were conducted to find out the extent to which Graeber was correct.
+
+I just finished [David Graeber's 2018 book "Bullshit Jobs"](https://isbnsearch.org/isbn/9781501143335), based on his 2013 essay [On the Phenomenon of Bullshit Jobs](https://davidgraeber.org/articles/on-the-phenomenon-of-bullshit-jobs-a-work-rant/). The essay at the time apparently caused a bit of a sensation, including an attempted rebuttal from *The Economist,* and several polls were conducted to find out the extent to which Graeber was correct.
 The key thesis is:
 > While corporations may engage in ruthless downsizing, the layoffs and speed-ups invariably fall on that class of people who are actually making, moving, fixing and maintaining things; through some strange alchemy no one can quite explain, the number of salaried paper-pushers ultimately seems to expand, and more and more employees find themselves, not unlike Soviet workers actually, working 40 or even 50 hour weeks on paper, but effectively working 15 hours just as Keynes predicted, since the rest of their time is spent organizing or attending motivational seminars, updating their facebook profiles or downloading TV box-sets.
 

@@ -1,12 +1,7 @@
 ---
 type: Post
-<<<<<<< HEAD
-slug:
-date_published: 2025-08-30
-=======
 slug: all-your-ai-is-belong-to-us
 date_published: 2025-08-31
->>>>>>> d1961a9 (Bullshit jobs)
 date_modified:
 image:
 banner_image:
@@ -14,6 +9,7 @@ external_url:
 tags:
 attachments:
 ---
+
 When I was in grad school I studied a protein called Fus2p. Fus2p exists in baker's yeast: the yeast responsible for making bread, beer, and for a surprising amount of our knowledge about how cells work. It is not related (in an obvious way) to any protein that exists in humans and it participates in the biological process of fusing two yeast cells together. This process is called "mating" but it probably isn't related (by evolution) to the fusion of mammalian gametes.
 
 There are only a few labs in the world interested in Fus2p and the direct concerns around it. Studying it might be broadly interesting someday for a deeper understanding of membrane dynamics or cell signalling or *something*, but few working biologists will ever have heard of it. This is to a first approximation kind of the point of a graduate degree: to know more and more about less and less until you know everything about nothing. Or less cynically, by concentrating tremendous effort in a tiny realm of human knowledge, to push the front line of that knowledge ahead, by a tiny amount.
