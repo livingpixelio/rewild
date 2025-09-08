@@ -7,8 +7,6 @@ interface Props {
 }
 
 export const BannerImage: FunctionComponent<Props> = ({ src, alt }) => {
-  console.log(src);
-
   const width = useWindowWidth();
 
   if (!src) return null;
