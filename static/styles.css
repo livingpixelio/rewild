@@ -18,31 +18,44 @@
     U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-html {
-  font-size: 20px;
-}
+@layer base {
+  html {
+    font-size: 20px;
+  }
 
-body {
-  font-family: "B612";
-  transition: background-color 3000ms linear;
-  color: hsl(273.33, 9.89%, 17.84%);
-}
+  body {
+    font-family: "B612";
+    @apply text-dark;
 
-body.scrolled {
-  background-color: hsla(86.47, 44.74%, 55.29%, 0.15);
+    transition: background-color 3000ms linear;
+    &.scrolled {
+      background-color: hsla(86.47, 44.74%, 55.29%, 0.15);
+    }
+  }
+
+  .content {
+    p {
+      @apply my-4;
+    }
+
+    ol {
+      @apply list-decimal pl-8 text-sm;
+    }
+
+    a:not(h2 > a, h3 > a, h4 > a, h5 > a, h6 > a) {
+      @apply text-primary underline;
+    }
+
+    blockquote {
+      @apply border-l-4 border-primary border-solid pl-8 text-sm;
+    }
+
+    h2 {
+      @apply text-2xl font-bold leading-tight mt-8 mb-4;
+    }
+  }
 }
 
 .lucide {
   display: inline;
-}
-
-.content p {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-.content ol {
-  list-style-type: decimal;
-  padding-left: 2rem;
-  font-size: 0.9em;
 }

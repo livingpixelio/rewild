@@ -26,10 +26,10 @@ export default function PostPage({ url, data }: PageProps<PostHandlerProps>) {
         alt={`Banner image for ${post.title}`}
       />
       <div class="container max-w-3xl mx-auto">
-        <p class="text-xs font-bold my-4">
+        <p class="text-xs font-bold my-4  flex flex-row items-center">
           <a href="/blog">
             <Icon icon={ArrowLeft} className="mr-2 inline" />
-            <span>Blog</span>
+            <span class="align-text-top">Blog</span>
           </a>
         </p>
 
@@ -40,7 +40,7 @@ export default function PostPage({ url, data }: PageProps<PostHandlerProps>) {
           {postDate(post.date_published)}
         </p>
 
-        <hr className="my-4" />
+        <hr className="my-8" />
 
         <div className="content">
           <Md node={post.content} preloads={data.preloads} />
