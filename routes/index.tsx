@@ -4,7 +4,7 @@ import {
   FobHead,
   Icon,
 } from "foblog";
-import { PageProps } from "$fresh/server.ts";
+import { PageProps } from "fresh";
 import Hero from "../islands/Hero.tsx";
 import { postDate } from "../lib/datetime.ts";
 import { ArrowRight } from "../components/icons.tsx";

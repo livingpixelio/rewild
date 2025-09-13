@@ -1,4 +1,4 @@
-import { PageProps } from "$fresh/server.ts";
+import { PageProps } from "fresh";
 import { Wrapper } from "../components/Wrapper.tsx";
 import { HalfCut } from "../islands/HalfCut.tsx";
 import { Shrooms } from "../islands/Shrooms.tsx";
