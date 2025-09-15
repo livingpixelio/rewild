@@ -1,4 +1,4 @@
-import { PageProps } from "$fresh/server.ts";
+import { PageProps } from "fresh";
 import { BlogListHandler, type BlogListHandlerProps } from "foblog";
 import { Wrapper } from "../../components/Wrapper.tsx";
 import { Paginator } from "foblog";

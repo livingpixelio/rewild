@@ -1,4 +1,4 @@
-import { PageProps } from "$fresh/server.ts";
+import { PageProps } from "fresh";
 import { PageHandler, PageHandlerProps } from "foblog";
 
 export const handler = PageHandler();

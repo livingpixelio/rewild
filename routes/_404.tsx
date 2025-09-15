@@ -1,5 +1,5 @@
 import { FobHead } from "foblog";
-import { PageProps } from "$fresh/server.ts";
+import { PageProps } from "fresh";
 
 import { HeroFullScreen } from "../islands/Hero.tsx";
 
