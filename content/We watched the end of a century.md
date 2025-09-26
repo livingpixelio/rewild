@@ -1,0 +1,44 @@
+---
+type: Post
+slug: the-meh-stage-of-grief
+date_published: 2025-09-26
+date_modified:
+image:
+banner_image:
+external_url:
+tags:
+attachments:
+---
+It is the month when I turn 44 and when you would turn 71, but you are gone. I'm not alone but I sure feel like someone left.
+
+All my old friends have gone. I am here with my girls: they love me and I am lucky to have them but they don't get it.
+
+The old world is gone. The CDs and the lockers, the world that opened itself up to me, and fell at my feet, that told me to prepare for the glory of our shared purpose, but it never arrived. The towers came down and the markets crashed, the promises made were torn, we looked at each other and wondered: where did the future go?
+
+We killed God. And for a long, long time we thought we could become him. We split the atom, we went to the moon, we changed the world, dethroned those who ruled in his name, mocked those we served him. We believed in Ourselves, as long as we could. As long as we kept going forward, as long as the future was yet to arrived.
+
+And then it arrived and it didn't make us Gods, but seems to be turning us into a new kind of slave.
+
+We are still grieving his loss. The jihadists are in denial, the MAGists are angry, the wokists are bargaining, and the ones in the tent camps are in depression. Only a16z believes we can become Gods, or so they say. When Silicon Valley clings stubbornly to that line, I suspect what they really mean is that *they* can become Gods, and build Skinner boxes to put the rest of us in.
+
+They can give us a box to be our God. To be a better opiate than Marx could have imagined. And they'll tell themselves that we deserve to be slaves, because they are strong enough and savvy enough and resourceful enough to have built our prisons.
+
+I do not know what to *do.* Not just about the myriad problems that confront us, I literally don't know what to do. Full stop. I do not know how to earn a living in a world where the only ones who can are phonies, sociopaths, or both. I don't know where to put my energy, my drive to explore and create. Most of all, I don't know what to tell my kids. They could live to see 2100. How do I prepare them for 2100?
+
+I suppose each generation raises their kids for the world they *think* they know. My grandmother went to finishing school - books on her head and the whole bit. Perhaps her parents wanted her to be a good little wife ... but more likely they just wanted her to have a good marriage, because a good marriage meant a good, happy life for women in the world they knew.
+
+My parents valued education, in some ways above all. Going to university was not optional. B's were tolerated, as long as they were in courses that didn't matter. A degree was the price of admission to the middle class, and everyone in my generation knew it.
+
+The problem was that everyone knew it. Low quality, overpriced education exploded, the price of such a valuable commodity went up, student labour was exploited by grad programs, postdoctoral and sessional positions. The perceived value of the commodity cratered the real value.
+
+We were told we could bring about Paradise if we just had the grit.
+
+Our moment has already passed. It passed because we believed *so* much in ourselves, *so* strongly that *we* were special, that *we* could beat the odds, that we forgot that to do anything *really* special, you have to act as one. You have to speak with one voice.
+
+The ones in the tent camps in Zucotti Park got it. The rest of us laughed at them: they didn't know what they were doing, they didn't know what they were saying. I did not go to Zurcotti Park, I was busy in the lab. I was trying to land the ball in the basket, I hadn't realized that the game was rigged so that the ball always bounced out.
+
+They are building our prison not because they are stronger or more resourceful, but because they have *purpose* and we *don't.* God is dead, his blood is on our hands, but we have not atoned. We are slowly, ever so slowly, realizing that we will not, ever, eat of the Tree of Life, but we are stuck in anger, bargaining, or depression, and unwilling to accept our humble, terrifyingly humble, place in the cosmos. We can't become him, we can only be excellent to each other, while we have the chance.
+
+And you, my mother, blessed upon the sad heights. You did not go gentle, and I can only assume it was because you still had that strength of purpose that I am still fighting to find.
+
+Bless me now with your fierce tears; and help me find some way to walk. Because all the paths are overgrown and I am running out of time.
