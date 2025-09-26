@@ -1,3 +1,16 @@
+---
+type: Post
+slug: dead-mom-dead-century
+date_published: 2025-09-26
+date_modified:
+image:
+banner_image:
+external_url:
+tags:
+attachments:
+---
+
+
 It is the month when I turn 44 and when you would turn 71, but you are gone. I'm not alone but I sure feel like someone left.
 All my old friends have gone. I am here with my girls: they love me and I am lucky to have them but they don't get it.
 The old world is gone. The CDs and the lockers, the world that opened itself up to me, and fell at my feet, that told me to prepare for the glory of our shared purpose, but it never arrived. The towers came down and the markets crashed, the promises made were torn, we looked at each other and wondered: where did the future go?
