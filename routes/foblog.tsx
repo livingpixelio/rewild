@@ -1,6 +1,6 @@
 import { FunctionComponent } from "preact";
 import { Wrapper } from "../components/Wrapper.tsx";
-import { PageProps } from "$fresh/server.ts";
+import { PageProps } from "fresh";
 import { Network } from "../islands/Network.tsx";
 import { FeatureList } from "../islands/FeatureList.tsx";
 

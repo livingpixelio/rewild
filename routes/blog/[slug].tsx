@@ -1,4 +1,4 @@
-import { PageProps } from "$fresh/server.ts";
+import { PageProps } from "fresh";
 import type { PostHandlerProps } from "foblog";
 import { CreateMd, Icon, PostHandler } from "foblog";
 
